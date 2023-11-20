@@ -63,7 +63,7 @@ namespace BurakSekmen.Controllers
             user.Password = hashedpass;
             user.Email = model.Email;
             user.PhotoUrl = photoUrl;
-            user.RoleId = 1;
+            user.Role = "Personel";
             _appDbContext.Users.Add(user);
             _appDbContext.SaveChanges();
             _notyfService.Success("Üye Kaydı Yapılmıştır. Oturum Açınız");
@@ -96,6 +96,7 @@ namespace BurakSekmen.Controllers
             {
             new Claim(ClaimTypes.Name, user.FullName),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.Role),
             new Claim("UserName",user.UserName),
             new Claim("FullName",user.FullName),
             new Claim("PhotoUrl",user.PhotoUrl)

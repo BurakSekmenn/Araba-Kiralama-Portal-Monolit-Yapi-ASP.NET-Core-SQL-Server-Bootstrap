@@ -20,16 +20,19 @@ namespace BurakSekmen.Controllers
             _configuration = configuration;
             _notyfService = notyfService;
             _appDbContext = appDbContext;
-          
         }
 
         public IActionResult Index()
         {
- 
             return View();
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        [Authorize(Roles = "Admin")]
         public IActionResult SiteSeo(SiteSeoViewModel model) {
-
+          
             var siteSeo = _appDbContext.Siteseos
                  .Where(x => x.Id == 1)
                  .Select(x => new SiteSeoViewModel
@@ -43,9 +46,11 @@ namespace BurakSekmen.Controllers
                  }).FirstOrDefault();
             return View(siteSeo);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult SiteSeoUpdate(SiteSeoViewModel model)
         {
+           
 
             try
             {

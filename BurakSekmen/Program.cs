@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     opt.ExpireTimeSpan = TimeSpan.FromDays(3);
     opt.LoginPath = new PathString("/Login/Index");
     opt.LogoutPath = new PathString("/Logout/Index");
-    opt.AccessDeniedPath = new PathString("/Logout/Index");
+    opt.AccessDeniedPath = new PathString("/Admin/AccessDenied");
     opt.Cookie.HttpOnly = true;
     opt.SlidingExpiration = true;
 });
