@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "SiteSeo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model SiteSeoViewModel
+<script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+<script type="text/javascript" src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 ofset-4">
+            <form asp-action="SiteSeoUpdate" method="post">
+                <div>
+                    <label for="sitebasligi">Site Başlığı:</label>
+                     
+                    <input type="text" class="form-control" id="sitebasligi" name="sitebasligi" asp-for="sitebasligi"   />
+                </div>
+                
+                <div>
+                    <label for="aciklama"> Site Açıklama:</label>
+                    <input type="text" class="form-control" id="aciklama" name="aciklama" asp-for="aciklama"  />
+                </div>
+
+                <div>
+                    <label for="siteanahtarkelime">Site Anahtar Kelime:</label>
+                    <input type="text" class="form-control" id="siteanahtarkelime" name="siteanahtarkelime" asp-for="siteanahtarkelime" value="@Model.siteanahtarkelime" />
+                </div>
+
+                <div>
+                    <label for="sitelogo">Site Logo URL:</label>
+                    <input type="text" class="form-control" id="sitelogo" name="sitelogo" asp-for="sitelogo" value="@Model.sitelogo"  />
+                </div>
+                <div>
+                    <label for="hakkimizda">Hakkımızda:</label>
+                    <textarea id="hakkimizda" class="form-control" rows="10" name="hakkimizda" asp-for="hakkimizda">@Model.hakkimizda</textarea>
+                </div>
+               
+                <button type="submit" class="btn btn-success"  style="margin-top:10px;">Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<link href="summernote-bs5.css" rel="stylesheet">
+<script src="summernote-bs5.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 300,
+            callbacks: {
+                onChange: function (contents) {
+                    $('#hakkimizdaHidden').val(contents);
+                }
+            }
+        });
+    });
+    $(document).ready(function () {    
+        $('form').submit(function (e) {        
+            e.preventDefault();
+            var formData = {
+                sitebasligi: $('#sitebasligi').val(),
+                aciklama: $('#aciklama').val(),
+                siteanahtarkelime: $('#siteanahtarkelime').val(),
+                sitelogo: $('#sitelogo').val(),
+                hakkimizda: $('#hakkimizda').val(), 
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/SiteSeoUpdate',
+                data: formData,
+                success: function (data) {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Başarılı!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'Tamam'
+                        })
+                            .then((result) => { 
+                                
+                            });
+                    } else {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: 'Hata!',
+                        text: 'Güncelleme sırasında bir hata oluştu.',
+                        icon: 'error',
+                        confirmButtonText: 'Tamam'
+                    });
+                }
+            });
+        });
+    });
+</script>

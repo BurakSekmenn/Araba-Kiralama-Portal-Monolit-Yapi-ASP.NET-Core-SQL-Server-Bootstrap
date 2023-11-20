@@ -6,6 +6,8 @@ namespace BurakSekmen.Models
     {
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Siteseo> Siteseos { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

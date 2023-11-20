@@ -2,17 +2,17 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-      
+
         <li class="nav-header">Site Ayarları</li>
         <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a asp-action="SiteSeo" class="nav-link">
                 <i class="nav-icon far fa-calculator"></i>
                 <p>
-                    Calendar
+                    Seo Ayarları
                 </p>
             </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">
                 <i class="nav-icon far fa-calendar-alt"></i>
                 <p>
@@ -21,14 +21,15 @@
             </a>
         <li class="nav-item">
             <a asp-action="Index" asp-controller="Logout" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+
                 <p>
                     Çıkış Yap
                 </p>
             </a>
         </li>
-        
-       
+
+
         <li class="nav-header">İşlemler</li>
         <li class="nav-item">
             <a href="iframe.html" class="nav-link">
