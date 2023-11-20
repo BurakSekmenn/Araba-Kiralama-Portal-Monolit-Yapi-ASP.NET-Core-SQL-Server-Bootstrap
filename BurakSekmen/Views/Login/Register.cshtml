@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+@model RegisterModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Registration Page</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE-3.2.0/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a asp-action="Index"><b>Rent A Car </b>Üye Kayıt</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Yeni Kullanıcı Kayıtı</p>
+
+                <form asp-action="Register" method="post" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <input asp-for="FullName" class="form-control" type="text" placeholder="İsminizi Giriniz."/>
+                     
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="FullName" class="text-danger"></span> </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Email" class="form-control" type="email"  placeholder="Mail Adresinizi Giriniz."/>
+                        
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="Email" class="text-danger"></span> </div>
+
+                    <div class="input-group mb-3">
+                        <input asp-for="UserName" class="form-control" placeholder="Kullanıcı Adınızı Giriniz."/>
+                     
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="UserName" class="text-danger"></span> </div>
+                    <div class="input-group mb-3">
+                        <input type="password" asp-for="Password" class="form-control" placeholder="Şifrenizi Giriniz" />
+                        
+                        <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+
+                         </div>
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="Password" class="text-danger"></span> </div>
+                    <div class="input-group mb-3">
+                        <input type="password" asp-for="PasswordConfirm" class="form-control" placeholder="Şifrenizi Tekrar Giriniz" />
+                        
+                   
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="PasswordConfirm" class="text-danger"></span> </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="PhotoFile" class="form-control" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-text" id="basic-addon4"> <span asp-validation-for="PhotoFile" class="text-danger"></span> </div>
+                    <div class="row">
+                        
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Kayıt Ol</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <a asp-action="Index" class="text-center">Üyeliğiniz Var mı ?</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <!-- jQuery -->
+    <script src="~/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @await Component.InvokeAsync("Notyf")
+   
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>
+
