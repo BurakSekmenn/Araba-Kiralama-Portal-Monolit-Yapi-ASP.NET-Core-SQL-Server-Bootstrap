@@ -49,7 +49,32 @@ namespace BurakSekmen.Models
         [StringLength(500)]
         public string AracAcıklama { get; set; }
 
+        [Column(TypeName = "VarChar")]
+        [StringLength(500)]
+        public string Fiyat { get; set; }
+
+
         public string Resim { get; set; }
+
+        public bool Klima { get; set; }
+        public bool CocukKoltugu { get; set; }
+        public bool Gps { get; set; }
+        public bool bagaj { get; set; }
+        public bool Music { get; set; }
+        public bool EmniyetKemeri { get; set; }
+        public bool ArabaYatagi { get; set; }
+        public bool dolab { get; set; }
+        public bool bluetooth { get; set; }
+        public bool arababilgisayarı { get; set; }
+        public bool SesGirisi { get; set; }
+        public bool ilkyardımcantası { get; set; }
+        public bool Arackiti { get; set; }
+        public bool uzaktankitleme { get; set; }
+        public bool klimakontrol { get;set; }
+
+
+
+
 
     }
 

@@ -3,6 +3,101 @@
     ViewData["Title"] = "VehicleKategori";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@model List<VehicleKategoriKayitModel>
+<button type="button" class="btn btn-success offset-10" id="tbl1" data-toggle="modal" data-target="#staticBackdrop">Yeni Kategori Ekle</button>
 
-<h1>VehicleKategori</h1>
+<div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Araba Kategori Tablosu</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tbl1" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Araç Kategori Türü Adı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Araç Kategori Türü Adı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+                <tbody id="tbl1">
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <th>@i</th>
+                            <td>@x.AracKategoriAdi</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateModal" id="updateButton" onclick="openUpdateModal('@x.Id', '@x.AracKategoriAdi')">Düzenle</button>
+                                <a class="btn btn-danger delete-button" data-id="@x.Id">Sil</a>
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Yeni Kategori Ekleme</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="VehicleKategoriKaydet" asp-controller="Vehicle" method="post">
+                    Araç Kategori Adını Giriniz:<br />
+                    <input type="text" name="AracKategoriAdi" class="form-control" />
+                    <br />
+                    <button class="btn btn-success">Kaydet</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Araç Yakıt Türü Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="updatedDataContainer">
+                </div>
+                <!-- Güncelleme Formu -->
+                <form id="updateForm">
+                    <div class="form-group">
+                        <label for="updateAracKategoriTuru">Araç Kategori Türü</label>
+                        <input type="text" class="form-control" id="updateAracKategoriAdi" name="AracKategoriAdi" required>
+                    </div>
+                    <input type="hidden" id="updateId" name="Id" value="">
+                    <button type="button" class="btn btn-primary" onclick="updateVehicle()">Güncelle</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/AracKategori.js"></script>
+
+    }

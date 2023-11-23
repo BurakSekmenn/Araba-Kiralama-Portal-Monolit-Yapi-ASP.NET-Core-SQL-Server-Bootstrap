@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "VehicleInsert";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model VehicleViewModel
+    <div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Yeni Araba Ekle</div>
+     
+    <div class="card-body">
+        <form asp-action="VehicleInsert" method="post" enctype="multipart/form-data">
+            <label asp-for="AracAdı"></label>
+            <input type="text" asp-for="AracAdı" class="form-control">
+            <span asp-validation-for="AracAdı" class="text-danger"></span>
+
+
+            <label asp-for="AracYakıId"></label>
+            @Html.DropDownListFor(x=>x.AracYakıId,(List<SelectListItem>)ViewBag.dgr1,new {@class="form-control",required="required"})
+            <span asp-validation-for="AracYakıId" class="text-danger"></span>
+
+            <label asp-for="AracKategorId"></label>
+            @Html.DropDownListFor(x=>x.AracKategorId,(List<SelectListItem>)ViewBag.dgr2,new {@class="form-control",required="required"})
+            <span asp-validation-for="AracKategorId" class="text-danger"></span>
+
+            <label asp-for="Fiyat"></label>
+            <input type="text" asp-for="Fiyat" class="form-control">
+            <span asp-validation-for="Fiyat" class="text-danger"></span>
+
+
+            <label asp-for="Arackm"></label>
+            <input type="text" asp-for="Arackm" class="form-control">
+            <span asp-validation-for="Arackm" class="text-danger"></span>
+
+            <label asp-for="AracMotorTip"></label>
+            <input type="text" asp-for="AracMotorTip" class="form-control">
+            <span asp-validation-for="AracMotorTip" class="text-danger"></span>
+
+            <label asp-for="AracKoltukSayisi"></label>
+            <input type="text" asp-for="AracKoltukSayisi" class="form-control">
+            <span asp-validation-for="AracKoltukSayisi" class="text-danger"></span>
+
+
+            <label asp-for="AracValizSayisi"></label>
+            <input type="text" asp-for="AracValizSayisi" class="form-control">
+            <span asp-validation-for="AracValizSayisi" class="text-danger"></span>
+
+            <label>Araç Özelliklerini Seçiniz:</label><br />
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="Klima">
+                <label class="form-check-label" for="inlineCheckbox1">Klima</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="Arackiti">
+                <label class="form-check-label" for="inlineCheckbox1">Arackiti</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="CocukKoltugu" >
+                <label class="form-check-label" for="inlineCheckbox2">Cocuk Koltugu</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="Gps" >
+                <label class="form-check-label" for="inlineCheckbox2">Gps</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="bagaj" >
+                <label class="form-check-label" for="inlineCheckbox2">Bagaj </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="Music" >
+                <label class="form-check-label" for="inlineCheckbox2">Müzik </label>
+            </div>
+             <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="EmniyetKemeri">
+                <label class="form-check-label" for="inlineCheckbox2">Emniyet Kemeri</label>
+            </div>
+             <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="bagaj" >
+                <label class="form-check-label" for="inlineCheckbox2">Bagaj</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="ArabaYatagi">
+                <label class="form-check-label" for="inlineCheckbox2">Araba Yatagi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="dolab" >
+                <label class="form-check-label" for="inlineCheckbox2">Dolab</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="bluetooth" >
+                <label class="form-check-label" for="inlineCheckbox2">Bluetooth</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="arababilgisayarı" >
+                <label class="form-check-label" for="inlineCheckbox2">Araba bilgisayarı</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="SesGirisi" >
+                <label class="form-check-label" for="inlineCheckbox2">Ses Girisi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="ilkyardımcantası">
+                <label class="form-check-label" for="inlineCheckbox2">ilk Tardımcantası</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="uzaktankitleme" >
+                <label class="form-check-label" for="inlineCheckbox2">uzaktan Kitleme</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" asp-for="klimakontrol" >
+                <label class="form-check-label" for="inlineCheckbox2">Klima Kontrol</label>
+            </div>
+
+        
+            <label asp-for="Resim"></label>
+            <input asp-for="Resim" class="form-control" />
+                   
+            
+            <label asp-for="AracAcıklama"></label>
+            <input type="textarea" row="5" asp-for="AracAcıklama" class="form-control">
+            <span asp-validation-for="AracAcıklama" class="text-danger"></span>
+            <br />
+            <button type="submit" class="btn btn-success">Kaydet </button>
+        </form>
+     
+     </div>
+
+</div>
+
+  @section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+  }
+   
+
+
+
+

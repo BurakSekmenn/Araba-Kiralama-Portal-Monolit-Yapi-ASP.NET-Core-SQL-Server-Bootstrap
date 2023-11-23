@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Vehicle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model List<VehicleViewModel>
+<a type="button" asp-action="VehicleInsert" class="btn btn-success offset-10">Yeni Araba Ekle</a>
+<div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Arabalarımız</div>
+    <div class="card-body">
+        <table id="deneme" class="table table-striped nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    
+                    <th>Araç Adı</th>
+                    <th>Arac Kategorisi</th>
+                    <th>Arac Yakıt</th>
+                    <th>Arac Km</th>
+                    <th>Arac Motor Tipi</th>  
+                    <th>Arac Resim</th>
+                    <th>İşlemler</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var x in Model)
+                {
+                    <tr>
+                        <td>@x.AracAdı</td>
+                        <td>@x.AracKategoriTurü</td>
+                        <td>@x.AracYakıtTuru</td>
+                        <td>@x.Arackm</td>
+                        <td>@x.AracMotorTip</td>
+                        <td><img src="~/Araba/@x.ResimData" style="width:100px; height:100px;"></td>
+                        <td>
+                            <a href="#" class="btn btn-secondary">Düzenle</a>
+                            <a href="#" class="btn btn-danger">Sil</a>
+                        </td>
+                    </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+<script>
+    new DataTable('#deneme', {
+        responsive: true
+    });
+</script>
+
