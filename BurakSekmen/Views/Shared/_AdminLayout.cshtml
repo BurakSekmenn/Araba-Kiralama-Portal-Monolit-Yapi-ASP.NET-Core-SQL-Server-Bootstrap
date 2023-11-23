@@ -10,6 +10,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE 3 | Dashboard</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-oLpSzefEe6I6cR80/R+NBhaFXQ+t3KTtDOnMmP3U6LZlEdW+CXR7Mq9dA4b9fL3V" crossorigin="anonymous"></script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-GLhlTQ8iKofL1dZzZTO6tbjGfNKeS6I/p6LZ3XMAdHBDuL/6IjN2c4z2xNXJK8i" crossorigin="anonymous"></script>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -195,11 +201,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="~/Photos/@User.FindFirst("PhotoUrl").Value" class="img-circle elevation-2" style="width:100px;" alt="User Image">
+                        <img src="~/Photos/@User.FindFirst("PhotoUrl")?.Value" class="img-circle elevation-2" style="width:100px;" alt="User Image">
                     </div>
                     <div class="info">
                         <a asp-action="Index" class="d-block">
-                            @User.FindFirst("FullName").Value<br />
+                            @User.FindFirst("FullName")?.Value<br />
                             <span>Hoşgeldin</span>!
                         </a>
                     </div>
