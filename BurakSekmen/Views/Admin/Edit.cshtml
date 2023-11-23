@@ -1,0 +1,28 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method ="post" asp-action="Edit">
+    <input id="dataId" value="@Model.Id" hidden />
+    <div class="container">
+        <div class="mb-2">
+            <label>Adı</label>
+            <input type="text" asp-for="@Model.FullName" class="form-control" value="@Model.FullName" placeholder="Adını Giriniz:" />
+        </div>
+        <div class="mb-2">
+            <label>Kullanıcı Adını giriniz</label>
+            <input type="text" asp-for="@Model.UserName" class="form-control" value="@Model.UserName" placeholder="Kullanıcı Adını giriniz:" />
+        </div>
+        <div class="mb-2">
+            <label>Roll Tipini</label>
+            <select id="role" class="form-control" asp-for="@Model.Role">
+                <option value="admin">Admin</option>
+                <option value="personel">Personel</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success offset-10">Güncelle</button>
+        <a href="#" class="btn btn-dark " >Geri Dön</a>
+    </div>
+</form>

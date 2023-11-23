@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace BurakSekmen.Controllers
 {
-    [Authorize]
+    
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,16 +22,82 @@ namespace BurakSekmen.Controllers
             _notyfService = notyfService;
             _appDbContext = appDbContext;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var gonder = _appDbContext.Users.Select(x => new RoleViewModel()
+            {
+                FullName = x.FullName,
+                Role=x.Role,
+                Id = x.Id,
+                UserName = x.UserName
+                
+            });
+            return View(gonder);
         }
         public IActionResult AccessDenied()
         {
             return View();
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Role()
+        {
+            var role = _appDbContext.Users.Select(x => new RoleViewModel()
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                UserName = x.UserName,
+                Role = x.Role
+            }).ToList();
+           return View  (role);
+        }
+        [Authorize(Roles = "admin")]
+        public JsonResult GetRole()
+        {
+            var roles = _appDbContext.Users
+            .Select(x => new RoleViewModel
+             {
+            Id = x.Id,
+            FullName = x.FullName,
+            UserName = x.UserName,
+            Role = x.Role
+             })
+             .ToList();
+            return Json (roles);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        [Route("/Admin/Edit/{id}")]
+        public IActionResult Edit(Guid id)
+        {
+            var user = _appDbContext.Users
+                        .Where(x => x.Id == id)
+                        .Select(x => new RoleViewModel
+                             {
+                                 Id = x.Id,
+                                 FullName = x.FullName,
+                                 UserName = x.UserName,
+                                 Role = x.Role
+                              }).FirstOrDefault();
+           
+            return View(user);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult Edit(RoleViewModel roleViewModel)
+        {
+
+            var user = _appDbContext.Users.FirstOrDefault(x => x.Id == roleViewModel.Id);
+            user.FullName = roleViewModel.FullName;
+            user.UserName = roleViewModel.UserName;
+            user.Role = roleViewModel.Role;
+            _appDbContext.SaveChanges();
+            _notyfService.Success("Kayıt Başarılı bir Şekilde Güncellendi");
+            return RedirectToAction("Role");
+        }
+
+
+       
+        [Authorize(Roles = "admin")]
         public IActionResult SiteSeo(SiteSeoViewModel model) {
           
             var siteSeo = _appDbContext.Siteseos
@@ -46,12 +113,10 @@ namespace BurakSekmen.Controllers
                  }).FirstOrDefault();
             return View(siteSeo);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult SiteSeoUpdate(SiteSeoViewModel model)
         {
-           
-
             try
             {
                 var product = _appDbContext.Siteseos.SingleOrDefault(x => x.Id == 1);
