@@ -33,20 +33,15 @@
                         <td>@x.AracMotorTip</td>
                         <td><img src="~/Araba/@x.ResimData" style="width:100px; height:100px;"></td>
                         <td>
-                            <a href="#" class="btn btn-secondary">Düzenle</a>
-                            <a href="#" class="btn btn-danger">Sil</a>
+                            <a asp-action="VehicleDetail" asp-route-id="@x.Id"  class="btn btn-secondary">Düzenle</a>
+                            <a class="btn btn-danger delete-button" data-id="@x.Id">Sil</a>
                         </td>
                     </tr>
-                    
                 }
             </tbody>
         </table>
     </div>
 </div>
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -54,9 +49,10 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
-<script>
-    new DataTable('#deneme', {
-        responsive: true
-    });
-</script>
+
+@section Scripts{
+    <script src="~/js/Arac.js"></script>
+}
+
+
 

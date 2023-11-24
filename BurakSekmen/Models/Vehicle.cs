@@ -72,8 +72,7 @@ namespace BurakSekmen.Models
         public bool uzaktankitleme { get; set; }
         public bool klimakontrol { get;set; }
 
-
-
+        public bool KategoriDurum { get; set; }
 
 
     }

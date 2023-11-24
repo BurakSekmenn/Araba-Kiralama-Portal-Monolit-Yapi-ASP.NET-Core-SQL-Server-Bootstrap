@@ -44,7 +44,7 @@ namespace BurakSekmen.ViewModels
         [Required(ErrorMessage = "Günlük Fiyatını Giriniz: !")]
         public string Fiyat { get; set; }
 
-        [NotMapped]
+  
         public string ResimData { get; set; }
 
         public string AracKategoriTurü { get; set; }
@@ -65,5 +65,9 @@ namespace BurakSekmen.ViewModels
         public bool Arackiti { get; set; }
         public bool uzaktankitleme { get; set; }
         public bool klimakontrol { get; set; }
+
+        public bool KategoriDurum { get; set; }
+
+
     }
 }

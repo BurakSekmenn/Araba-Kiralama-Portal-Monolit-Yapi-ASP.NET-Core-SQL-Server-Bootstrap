@@ -4,16 +4,16 @@
         var deleteButton = $(this);
 
         $.ajax({
-            url: '/Vehicle/VehiclYakıtDelete/' + Id,
+            url: '/Vehicle/VehicleDelete/' + Id,
             type: 'POST',
             success: function (data) {
                 if (data.success) {
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Başarılı!',
                         text: 'Silme işlemi başarıyla gerçekleştirildi.'
-                    });             
+                    });
                     deleteButton.closest('tr').remove();
                 } else {
                     Swal.fire({
@@ -24,38 +24,26 @@
                 }
             },
             error: function () {
-            
+
                 console.error('Silme işlemi sırasında bir hata oluştu.');
             }
         });
     });
 })
-function openUpdateModal(id, aracYakıtTuru) {
-    $('#updateId').val(id);
-    $('#updateAracYakıtTuru').val(aracYakıtTuru);
-    $('#updateModal').modal('show');
-}
-function updateVehicle() {
 
-    var formData = $('#updateForm').serialize();
-    $.ajax({
-        url: '/Vehicle/VehiclYakıtUpdate',
-        type: 'POST',
-        data: formData,
-        success: function (data) {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Güncelleme işlemi başarısız!');
+    new DataTable('#deneme', {
+        responsive: true,
+        "language": {
+            "search": "Arama Yap:",
+            "lengthMenu": "Her Sayfada _MENU_  tane veri göster",
+            "zeroRecords": "Kayıt Bulunamadı",
+            "info": "_MAX_ kayıttan   _PAGE_ - _MAX_ arasındaki kayıtlar gösteriliyor",
+            "infoEmpty": "Kayıt Bulunamadı",
+            "infoFiltered": "(Toplam Veri Sayısı _MAX_ )",
+            "paginate": {
+                "previous": "Geri",
+                "next": "İleri"
             }
-        },
-        error: function () {
-
-            console.error('Güncelleme işlemi sırasında bir hata oluştu.');
+             
         }
     });
-
-
-    return false;
-}
-
