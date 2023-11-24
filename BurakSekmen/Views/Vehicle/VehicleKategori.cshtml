@@ -37,6 +37,7 @@
                             <td>
                                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateModal" id="updateButton" onclick="openUpdateModal('@x.Id', '@x.AracKategoriAdi')">Düzenle</button>
                                 <a class="btn btn-danger delete-button" data-id="@x.Id">Sil</a>
+                                <a class="btn btn-info" asp-action="KategoriArac" asp-route-id="@x.Id">Arabalara Git</a>
                             </td>
                         </tr>
                         i = i + 1;

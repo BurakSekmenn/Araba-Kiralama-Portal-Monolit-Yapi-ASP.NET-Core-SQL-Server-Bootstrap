@@ -122,12 +122,47 @@ namespace BurakSekmen.Controllers
             }
             return Json(new { success = false, error = "Kategori bulunamadı." });
         }
+        [HttpGet]
+        public IActionResult KategoriArac(int id)
+        {
+            
+            var araclarım = _appDbContext.Vehicles
+            .Include(x => x.AracKategori)
+            .Include(x => x.aracYakıt)
+            .Where(x => x.AracKategorId == id)
+            .Select(x => new VehicleViewModel()
+                {
+                    AracAdı = x.AracAdı,
+                    AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
+                    AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
+                    Arackm = x.Arackm,
+                    AracMotorTip = x.AracMotorTip,
+                    AracKoltukSayisi = x.AracKoltukSayisi,
+                    AracValizSayisi = x.AracValizSayisi,
+                    AracAcıklama = x.AracAcıklama,
+                    ResimData = x.Resim,
+                    Id = x.Id,
+                })
+                .ToList();
+            if (araclarım.Count > 0)
+            {
+                _notyfService.Success("Kategoriye Göre Araçlar Sıralandı");
+                return View(araclarım);
+            }
+            else
+            {
+                _notyfService.Warning("Belirtilen kategoriye ait araç bulunamadı");
+                return View(araclarım);
+            }
+         
+           
+        }
 
         public IActionResult Vehicle()
         {
             var araclarım = _appDbContext.Vehicles
-                 .Include(x => x.AracKategori)  // AracKategori tablosunu yükleyin
-                 .Include(x => x.aracYakıt)     // AracYakıt tablosunu yükleyin
+                 .Include(x => x.AracKategori)  
+                 .Include(x => x.aracYakıt)     
                    .Select(x => new VehicleViewModel()
                    {
                        AracAdı = x.AracAdı,
@@ -212,6 +247,7 @@ namespace BurakSekmen.Controllers
             kayıtyap.uzaktankitleme = model.uzaktankitleme;
             _appDbContext.Add(kayıtyap);
             _appDbContext.SaveChanges();
+            _notyfService.Success("Yeni Araç Başarılı Bir Şekilde Eklendi");
             return RedirectToAction("Vehicle", "Vehicle");
         }
 
@@ -239,6 +275,7 @@ namespace BurakSekmen.Controllers
 
             _appDbContext.Vehicles.Remove(silinecekveri);
             _appDbContext.SaveChanges();
+            
 
             return Json(new { success = true, message = "Araç başarıyla silindi." });
         }
@@ -368,7 +405,7 @@ namespace BurakSekmen.Controllers
                 vehicleToUpdate.ilkyardımcantası = model.ilkyardımcantası;
                 vehicleToUpdate.klimakontrol = model.klimakontrol;
                 vehicleToUpdate.uzaktankitleme = model.uzaktankitleme;
-
+                _notyfService.Success("Güncelleme Başarılı Bir Şekilde Gerçekleştirildi");
                 // Değişiklikleri kaydet
                 await _appDbContext.SaveChangesAsync();
 
