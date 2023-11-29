@@ -70,6 +70,17 @@ namespace BurakSekmen.Controllers
             _appDbContext.SaveChanges();
             return Json(new { success = true });
         }
+
+        public IActionResult vehiclegetir()
+        {
+
+            var kayıtgetir = _appDbContext.AracKategoris.Select(x => new VehicleKategoriKayitModel()
+            {
+                Id = x.Id,
+                AracKategoriAdi = x.AracKategoriAdi
+            }).ToList();
+            return Json(kayıtgetir);
+        }
         public IActionResult GetUpdatedTableData()
         {
             var kayıtgetir = _appDbContext.AracYaks.Select(x => new VehicleAracKayıtViewModel()
@@ -154,8 +165,6 @@ namespace BurakSekmen.Controllers
                 _notyfService.Warning("Belirtilen kategoriye ait araç bulunamadı");
                 return View(araclarım);
             }
-         
-           
         }
 
         public IActionResult Vehicle()
@@ -202,6 +211,16 @@ namespace BurakSekmen.Controllers
 
             ViewBag.dgr2 = kategoribuldu;
 
+
+            List<SelectListItem> markabul = (from x in _appDbContext.AracMarkas.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.aracmarka,
+                                                 Value = x.Id.ToString()
+                                             }).ToList();
+            ViewBag.dgr3 = markabul;
+
+
             return View();
 
         }
@@ -222,6 +241,7 @@ namespace BurakSekmen.Controllers
             var kayıtyap = new Vehicle();
             kayıtyap.AracKategorId = model.AracKategorId;
             kayıtyap.AracYakıId = model.AracYakıId;
+            kayıtyap.AracMarkaId = model.aracMarkaId;
             kayıtyap.Fiyat = model.Fiyat;
             kayıtyap.AracAdı = model.AracAdı;
             kayıtyap.Arackm = model.Arackm;
@@ -299,6 +319,16 @@ namespace BurakSekmen.Controllers
                                                       Value = x.Id.ToString()
                                                   }).ToList();
             ViewBag.dgr2 = kategoribuldu;
+
+            List<SelectListItem> markabul = (from x in _appDbContext.AracMarkas.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.aracmarka,
+                                                 Value = x.Id.ToString()
+                                             }).ToList();
+            ViewBag.dgr3 = markabul;
+
+
             // Veritabanından aracı ID'ye göre getir
             var arac = _appDbContext.Vehicles
                 .Include(x => x.AracKategori)
@@ -314,6 +344,7 @@ namespace BurakSekmen.Controllers
             {
                 AracKategorId = arac.AracKategorId,
                 AracYakıId = arac.AracYakıId,
+                aracMarkaId = arac.AracMarkaId,
                 Fiyat = arac.Fiyat,
                 ResimData = arac.Resim,
                 AracAdı = arac.AracAdı,
@@ -382,6 +413,7 @@ namespace BurakSekmen.Controllers
                 // Diğer özellikleri güncelle
                 vehicleToUpdate.AracKategorId = model.AracKategorId;
                 vehicleToUpdate.AracYakıId = model.AracYakıId;
+                vehicleToUpdate.AracMarkaId = model.aracMarkaId;
                 vehicleToUpdate.Fiyat = model.Fiyat;
                 vehicleToUpdate.AracAdı = model.AracAdı;
                 vehicleToUpdate.Arackm = model.Arackm;
@@ -416,15 +448,48 @@ namespace BurakSekmen.Controllers
                 // ID'ye göre araç bulunamazsa
                 return NotFound();
             }
+        }
 
 
+        public IActionResult ArabaMarka()
+        {
+            return View();
+        }
+        public IActionResult Arababul()
+        {
+            var arabagetir = _appDbContext.AracMarkas.Select(x => new ArabaMarkaViewModel()
+            {
+                Id = x.Id,
+                aracmarka = x.aracmarka
+            }).ToList();
+            return Json(arabagetir);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ArabaUpdate(ArabaMarkaViewModel model)
+        {
+            var marka = _appDbContext.AracMarkas.SingleOrDefault(x => x.Id == model.Id);
+            marka.aracmarka = model.aracmarka;
+            _appDbContext.AracMarkas.Update(marka!);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+        [HttpPost]
+        public async Task<IActionResult> AracDelete(ArabaMarkaViewModel model)
+        {
+            var deletekayıt = _appDbContext.AracMarkas.FirstOrDefault(x => x.Id == model.Id);
+            _appDbContext.AracMarkas.Remove(deletekayıt!);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
 
+        }
 
-
-
-      
-
-         
+        public async Task<IActionResult> AracInsert(ArabaMarkaViewModel model)
+        {
+            var aracmarka = new AracMarka();
+            aracmarka.aracmarka = model.aracmarka;
+            _appDbContext.AracMarkas.Add(aracmarka);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
         }
 
     }

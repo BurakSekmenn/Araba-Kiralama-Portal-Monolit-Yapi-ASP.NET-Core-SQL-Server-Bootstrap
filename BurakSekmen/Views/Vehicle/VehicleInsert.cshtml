@@ -13,6 +13,10 @@
             <span asp-validation-for="AracAdı" class="text-danger"></span>
 
 
+
+
+
+
             <label asp-for="AracYakıId"></label>
             @Html.DropDownListFor(x=>x.AracYakıId,(List<SelectListItem>)ViewBag.dgr1,new {@class="form-control",required="required"})
             <span asp-validation-for="AracYakıId" class="text-danger"></span>
@@ -20,6 +24,13 @@
             <label asp-for="AracKategorId"></label>
             @Html.DropDownListFor(x=>x.AracKategorId,(List<SelectListItem>)ViewBag.dgr2,new {@class="form-control",required="required"})
             <span asp-validation-for="AracKategorId" class="text-danger"></span>
+
+
+
+            <label asp-for="aracMarkaId"></label>
+            @Html.DropDownListFor(x=>x.aracMarkaId,(List<SelectListItem>)ViewBag.dgr3,new {@class="form-control",required="required"})
+            <span asp-validation-for="aracMarkaId" class="text-danger"></span>
+
 
             <label asp-for="Fiyat"></label>
             <input type="text" asp-for="Fiyat" class="form-control">
@@ -44,6 +55,7 @@
             <span asp-validation-for="AracValizSayisi" class="text-danger"></span>
 
             <label>Araç Özelliklerini Seçiniz:</label><br />
+
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" asp-for="Klima">
                 <label class="form-check-label" for="inlineCheckbox1">Klima</label>

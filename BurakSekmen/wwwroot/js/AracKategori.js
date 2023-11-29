@@ -38,17 +38,15 @@ $(document).ready(function () {
             type: 'POST',
             success: function (data) {
                 if (data.success) {
-                    // Silme işlemi başarılı ise SweetAlert kullanarak bildirim göster
+               
                     Swal.fire({
                         icon: 'success',
                         title: 'Başarılı!',
                         text: 'Silme işlemi başarıyla gerçekleştirildi.'
                     });
-
-                    // Silinen satırı tablodan kaldır
                     deleteButton.closest('tr').remove();
                 } else {
-                    // Silme işlemi başarısız ise SweetAlert ile hata bildirimi göster
+                 
                     Swal.fire({
                         icon: 'error',
                         title: 'Hata!',
@@ -57,7 +55,7 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                // Hata durumunda gerekli işlemleri yapabilirsiniz
+
                 console.error('Silme işlemi sırasında bir hata oluştu.');
             }
         });

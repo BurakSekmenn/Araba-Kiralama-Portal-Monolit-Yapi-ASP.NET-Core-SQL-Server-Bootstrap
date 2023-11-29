@@ -3,6 +3,132 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@model List<VehicleViewModel>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Hoş Geldin @*@User.FindFirst("UserName").Value  *@!</h4>
+        </div>
+    </div>
+</div>
+<br />
 
-<h1>Index</h1>
+
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>@ViewBag.toplam</h3>
+                <p>Toplam Araçlarımız</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-car"></i>
+            </div>
+            <a asp-action="Vehicle" asp-controller="Vehicle" class="small-box-footer">
+                Arabalar <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>@ViewBag.kategori</h3>
+                <p>Toplam Kategorimiz</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-car-side"></i>
+            </div>
+            <a asp-action="VehicleKategori" asp-controller="Vehicle" class="small-box-footer">
+                Kategorilerimiz <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>@ViewBag.kategori</h3>
+                <p>Toplam Markalarımız</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-car-battery"></i>
+            </div>
+            <a asp-action="VehicleYakıt" asp-controller="Vehicle" class="small-box-footer">
+                Yakıt Türlerimiz <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@ViewBag.marka</h3>
+                <p>Toplam Araba Marka Sayımız</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-cart"></i>
+            </div>
+            <a asp-action="ArabaMarka" asp-controller="Vehicle" class="small-box-footer">
+                Araba Marka  <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="p-3">
+                <div class="card-widgets">
+                    <a href="javascript:;" data-bs-toggle="reload"><i class="ri-refresh-line"></i></a>
+                    <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
+                    <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
+                </div>
+                <h5 class="header-title mb-0">Son Eklenen 5 Araçlar</h5>
+            </div>
+
+            <div id="yearly-sales-collapse" class="collapse show">
+
+                <div class="table-responsive">
+                    <table class="table table-nowrap table-hover mb-0">
+                        <thead>
+                            
+                            <tr>
+                                <th>#</th>
+                                <th>Resim</th>
+                                <th>Araç</th>
+                                <th>Arac Motoru</th>
+                                <th>Arac Tipi</th>
+                                <th>Günlük Kirası</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach(var item in Model){
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="~/Araba/@item.ResimData" style="height:100px;width:110px;border-radius:50%" /> @item.Resim</td>
+                                    <td>@item.AracAdı</td>
+                                    <td>@item.AracYakıtTuru</td>
+                                    <td>@item.AracKategoriTurü</td>
+                                    <td>
+                                        <span class="badge bg-info-subtle text-info"> @item.Fiyat ₺</span>
+                                        
+                                       </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
 

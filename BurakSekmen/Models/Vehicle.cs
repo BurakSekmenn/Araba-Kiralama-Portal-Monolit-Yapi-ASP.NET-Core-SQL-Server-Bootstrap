@@ -19,6 +19,11 @@ namespace BurakSekmen.Models
 
         public AracKategori AracKategori { get; set; }
 
+
+        [ForeignKey(nameof(aracMarka))]
+        public int AracMarkaId { get; set; }
+        public AracMarka aracMarka { get; set; }
+
       
 
 
@@ -100,5 +105,19 @@ namespace BurakSekmen.Models
         public string AracKategoriAdi { get; set; }
 
         public ICollection<Vehicle> vehicles { get; set; }
+    }
+
+
+    public class AracMarka
+    {
+        [Key]
+        public int Id { get; set;}
+
+        [Column(TypeName = "VarChar")]
+        [StringLength(50)]
+        public string aracmarka { get; set; }
+
+        public ICollection<Vehicle> vehicles { get;set; }
+
     }
 }

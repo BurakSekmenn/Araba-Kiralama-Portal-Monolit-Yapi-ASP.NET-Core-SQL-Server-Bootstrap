@@ -14,6 +14,8 @@ namespace BurakSekmen.Models
 
         public DbSet<AracYakıt> AracYaks { get; set; }
 
+        public DbSet<AracMarka> AracMarkas { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

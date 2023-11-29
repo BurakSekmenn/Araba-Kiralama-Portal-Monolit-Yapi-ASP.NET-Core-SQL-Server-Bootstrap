@@ -7,15 +7,18 @@ namespace BurakSekmen.ViewModels
     public class VehicleViewModel
     {
         public int Id { get; set; }
-        [Display(Name = "Açıklama Giriniz:")]
+        [Display(Name = "Yakıt Türünü Seçiniz:")]
         [Required(ErrorMessage = "Lütfen Seçim Yapınız !")]
         public int AracYakıId { get; set; }
         [Display(Name = "Açıklama Giriniz:")]
         [Required(ErrorMessage = "Lütfen Arac Acıklama Giriniz !")]
         public string AracAcıklama { get; set; }
-        [Display(Name = "Açıklama Giriniz:")]
+        [Display(Name = "Araç tipini Seçiniz:")]
         [Required(ErrorMessage = "Lütfen Arac Acıklama Giriniz !")]
         public int AracKategorId { get; set; }
+        [Display(Name = "Markayı Seçiniz :")]
+        [Required(ErrorMessage = "Lütfen Arac Acıklama Giriniz !")]
+        public int aracMarkaId { get; set; }
         public AracYakıt aracYakıt { get; set; }
         public AracKategori AracKategori { get; set; }
         [Display(Name = "Arac Adı Giriniz:")]

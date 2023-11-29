@@ -4,7 +4,7 @@ using BurakSekmen.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace BurakSekmen.Controllers
 {
@@ -24,15 +24,30 @@ namespace BurakSekmen.Controllers
         }
         public IActionResult Index()
         {
-            var gonder = _appDbContext.Users.Select(x => new RoleViewModel()
-            {
-                FullName = x.FullName,
-                Role=x.Role,
-                Id = x.Id,
-                UserName = x.UserName
-                
-            });
-            return View(gonder);
+            ViewBag.toplam= _appDbContext.Vehicles.Count().ToString();
+            ViewBag.kategori=_appDbContext.AracKategoris.Count().ToString();
+            ViewBag.yakıt=_appDbContext.AracYaks.Count().ToString();
+            ViewBag.marka=_appDbContext.AracMarkas.Count().ToString();
+
+
+
+            var araclarım = _appDbContext.Vehicles
+                  .Include(x => x.AracKategori)
+                  .Include(x => x.aracYakıt)
+                  .OrderByDescending(x => x.Id)
+                  .Take(5)
+                    .Select(x => new VehicleViewModel()
+                    {
+                        AracAdı = x.AracAdı,
+                        AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
+                        AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
+                        ResimData = x.Resim,
+                        Arackm = x.Arackm,
+                        Fiyat = x.Fiyat,
+                        Id = x.Id,
+                    })
+                     .ToList();
+            return View(araclarım);
         }
         public IActionResult AccessDenied()
         {
@@ -144,8 +159,6 @@ namespace BurakSekmen.Controllers
                 // Hata durumunda loglama veya başka bir işlem yapabilirsiniz
                 return Json(new { success = false, message = "Güncelleme sırasında bir hata oluştu." });
             }
-
-        
         }
      
     }

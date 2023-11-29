@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "ArabaMarka";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4" style="margin-top:20px;">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Araç Marka Tablosu</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tbaraba" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sıra No</th>
+                                    <th>Araç Tipi </th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Sıra No</th>
+                                    <th>Araç Kategori Türü Adı</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4" style="margin-top:20px;">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>İşlemler Tablosu</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <form>
+                            <input type="hidden" name="id" id="id" />
+                   
+                            <label>Araç Tipi</label>
+                            <input type="text" class="form-control" name="aracmarka" id="aracmarka" /><br />
+
+                            <button class="btn btn-success">Güncelleme Yap</button>
+                            <button class="btn btn-danger">Sil </button>
+                         
+                            <button class="btn btn-info" id="ekleButton">Yeni Marka Ekle</button>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+    <script src="~/js/marka.js"></script>
+    <script>
+        document.getElementById("duzenleButton").addEventListener("click", function () {
+            // "Yeni Araç Tipi Ekle" buttonunu gizle
+            document.getElementById("ekleButton").style.display = "none";
+        });
+
+        // Eğer "Düzenle" buttonu tıklanıldığında "Yeni Araç Tipi Ekle" buttonunu göstermek istiyorsanız:
+        document.getElementById("duzenleButton").addEventListener("click", function () {
+            // "Yeni Araç Tipi Ekle" buttonunu göster
+            document.getElementById("ekleButton").style.display = "block";
+        });
+    </script>
+}

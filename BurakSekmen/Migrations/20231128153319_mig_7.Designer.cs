@@ -4,6 +4,7 @@ using BurakSekmen.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurakSekmen.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231128153319_mig_7")]
+    partial class mig_7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,9 +176,6 @@ namespace BurakSekmen.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("VarChar");
 
-                    b.Property<int>("AracMarkaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("AracMotorTip")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -230,6 +230,9 @@ namespace BurakSekmen.Migrations
                     b.Property<bool>("arababilgisayarı")
                         .HasColumnType("bit");
 
+                    b.Property<int>("aracMarkaId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("bagaj")
                         .HasColumnType("bit");
 
@@ -252,9 +255,9 @@ namespace BurakSekmen.Migrations
 
                     b.HasIndex("AracKategorId");
 
-                    b.HasIndex("AracMarkaId");
-
                     b.HasIndex("AracYakıId");
+
+                    b.HasIndex("aracMarkaId");
 
                     b.ToTable("Vehicles");
                 });
@@ -267,15 +270,15 @@ namespace BurakSekmen.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BurakSekmen.Models.AracMarka", "aracMarka")
-                        .WithMany("vehicles")
-                        .HasForeignKey("AracMarkaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BurakSekmen.Models.AracYakıt", "aracYakıt")
                         .WithMany("vehicles")
                         .HasForeignKey("AracYakıId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BurakSekmen.Models.AracMarka", "aracMarka")
+                        .WithMany("vehicles")
+                        .HasForeignKey("aracMarkaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

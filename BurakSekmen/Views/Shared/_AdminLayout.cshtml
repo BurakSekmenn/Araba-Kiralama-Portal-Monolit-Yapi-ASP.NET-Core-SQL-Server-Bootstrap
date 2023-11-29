@@ -24,7 +24,10 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="~/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-utilities.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="~/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
@@ -191,7 +194,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a asp-action="Index" class="brand-link">
+            <a asp-action="Index" asp-controller="Admin" class="brand-link">
                 <img src="~/AdminLTE-3.2.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
@@ -204,7 +207,7 @@
                         <img src="~/Photos/@User.FindFirst("PhotoUrl")?.Value" class="img-circle elevation-2" style="width:100px;" alt="User Image">
                     </div>
                     <div class="info">
-                        <a asp-action="Index" class="d-block">
+                        <a asp-action="Index" asp-controller="Admin" class="d-block">
                             @User.FindFirst("FullName")?.Value<br />
                             <span>Hoşgeldin</span>!
                         </a>

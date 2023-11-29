@@ -4,17 +4,17 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @model List<VehicleKategoriKayitModel>
-<button type="button" class="btn btn-success offset-10" id="tbl1" data-toggle="modal" data-target="#staticBackdrop">Yeni Kategori Ekle</button>
+<button type="button" class="btn btn-success offset-10" id="tbl1" data-toggle="modal" data-target="#staticBackdrop">Yeni Araç Tipi Ekle</button>
 
 <div class="card mb-4" style="margin-top:20px;">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Araba Kategori Tablosu</div>
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Araba Tipi Tablosu</div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="tbl1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Sıra No</th>
-                        <th>Araç Kategori Türü Adı</th>
+                        <th>Araç Tipi </th>
                         <th>İşlemler</th>
                     </tr>
                 </thead>
@@ -48,6 +48,8 @@
     </div>
 </div>
 
+
+
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -56,7 +58,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="VehicleKategoriKaydet" asp-controller="Vehicle" method="post">
-                    Araç Kategori Adını Giriniz:<br />
+                    Yeni Araç Tipi Ekle:<br />
                     <input type="text" name="AracKategoriAdi" class="form-control" />
                     <br />
                     <button class="btn btn-success">Kaydet</button>
@@ -98,6 +100,8 @@
         </div>
     </div>
 </div>
+
+
 @section Scripts{
     <script src="~/js/AracKategori.js"></script>
     }

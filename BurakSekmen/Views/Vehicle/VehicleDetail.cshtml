@@ -28,6 +28,10 @@
             @Html.DropDownListFor(x=>x.AracKategorId,(List<SelectListItem>)ViewBag.dgr2,new {@class="form-control",required="required"})
             <span asp-validation-for="AracKategorId" class="text-danger"></span>
 
+            <label asp-for="aracMarkaId"></label>
+            @Html.DropDownListFor(x=>x.aracMarkaId,(List<SelectListItem>)ViewBag.dgr3,new {@class="form-control",required="required"})
+            <span asp-validation-for="aracMarkaId" class="text-danger"></span>
+
             <label asp-for="Fiyat"></label>
             <input type="text" asp-for="Fiyat" class="form-control">
             <span asp-validation-for="Fiyat" class="text-danger"></span>
