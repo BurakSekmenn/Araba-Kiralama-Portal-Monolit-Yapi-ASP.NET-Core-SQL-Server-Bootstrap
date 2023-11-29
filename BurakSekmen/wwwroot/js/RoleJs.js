@@ -27,7 +27,7 @@ function GetRole() {
                     object += '<td>' + item.userName + '</td>';
                     object += '<td>' + item.role + '</td>';
                     //object += '<td> <a href = "#" id="editModal class="btn btn-primary btn-sm" onclick="Edit(' + item.id + ')">Edit</a>  <a href = "#" class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')">Delete</a> </td> ';
-                    object += `<td> <a href="/Admin/Edit/${item.id}" class="btn btn-primary " data-id="${item.id}">Edit</a>  <button href = "#" class="btn btn - danger btn - sm" onclick="Delete(${item.id})">Delete</button> </td> `;
+                    object += `<td> <a href="/Admin/Edit/${item.id}" class="btn btn-primary " data-id="${item.id}">Edit</a>  </td> `;
                     object += '</tr>';
 
                 });

@@ -28,7 +28,7 @@ namespace BurakSekmen.Models
 
 
         [Column(TypeName = "VarChar")]
-        [StringLength(60)]
+        [StringLength(250)]
         public string AracAdı { get; set; }
 
         [Column(TypeName = "VarChar")]
@@ -88,7 +88,7 @@ namespace BurakSekmen.Models
         public int Id { get; set; }
 
         [Column(TypeName = "VarChar")]
-        [StringLength(10)]
+        [StringLength(30)]
         public string AracYakıtTuru { get; set; }
 
         public ICollection<Vehicle> vehicles { get; set; }

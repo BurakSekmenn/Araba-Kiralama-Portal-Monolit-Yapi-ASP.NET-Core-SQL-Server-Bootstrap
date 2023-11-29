@@ -45,12 +45,13 @@ namespace BurakSekmen.Controllers
         }
 
         [HttpPost]
-        public IActionResult VehiclYakıtKaydet(VehicleAracKayıtViewModel model)
+        public async Task<IActionResult> VehiclYakıtKaydet(VehicleAracKayıtViewModel model)
         {
             var aracyakıt = new AracYakıt();
             aracyakıt.AracYakıtTuru = model.AracYakıtTuru;
             _appDbContext.AracYaks.Add(aracyakıt);
-            _appDbContext.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
+            _notyfService.Success("Kayıt Başarılı Bir Şekilde Gerçekleştirildi");
             return RedirectToAction("VehicleYakıt", "Vehicle");
         }
         [HttpPost]
@@ -110,6 +111,7 @@ namespace BurakSekmen.Controllers
             aracKategori.AracKategoriAdi = model.AracKategoriAdi;
             _appDbContext.AracKategoris.Add(aracKategori);
             _appDbContext.SaveChanges();
+            _notyfService.Success("Yeni Araç Tipi Eklendi");
             return RedirectToAction("VehicleKategori", "Vehicle");
         }
         [HttpPost]

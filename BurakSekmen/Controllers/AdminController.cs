@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BurakSekmen.Controllers
 {
-    
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
