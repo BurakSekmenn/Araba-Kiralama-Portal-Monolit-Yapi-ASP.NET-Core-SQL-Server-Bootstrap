@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Duyuru";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model List<DuyuruViewModel>
+<button type="button" class="btn btn-success offset-10" id="tbl1" data-toggle="modal" data-target="#staticBackdrop">Yeni Araç Tipi Ekle</button>
+
+<div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Duyuru Tablosu</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tbl1" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Duyuru </th>
+                        <th>Durmu</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Duyuru </th>
+                        <th>Durmu</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach(var x in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@x.DuyurAcıklama</td>
+                            <td>@if (x.Durum == true)
+                                {
+                                    <a asp-action="BadgeUptade" asp-controller="Admin" asp-route-id="@x.Id" asp-route-Durum="false"><span class="badge rounded-pill text-bg-primary">Aktif</span></a>
+                                }else{
+                                    <a asp-action="BadgeUptade" asp-controller="Admin" asp-route-id="@x.Id" asp-route-Durum="true"> <span class="badge rounded-pill text-bg-danger">Pasif</span></a>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-secondary" asp-action="DuyurGuncelle" asp-controller="Admin" asp-route-id="@x.Id">Güncelle</a>
+                                <a class="btn btn-danger" asp-action="DuyuruSil" asp-controller="Admin" asp-route-id="@x.Id">Sil</a>
+                            </td>
+                        </tr>
+                        i = i +1;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Yeni Kategori Ekleme</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="DuyurEkle" asp-controller="Admin" method="post">
+                    Yeni Duyuru Ekle:<br />
+                    <input type="text" name="DuyurAcıklama" class="form-control" />
+                    <br />
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="True" name="Durum" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Aktif Duyurmu?
+                        </label>
+                    </div>
+                    <button class="btn btn-success">Kaydet</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+

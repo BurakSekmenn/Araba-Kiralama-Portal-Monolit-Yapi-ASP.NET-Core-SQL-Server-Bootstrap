@@ -3,14 +3,49 @@
     ViewData["Title"] = "AccessDenied";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 ofset-4">
-            <h1 class="display-1">Bu Sayfaya Girme Yetkiniz Yok</h1>
-        </div>
-    </div>
-</div>
+<html>
+<head>
+    <title>403 Forbidden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F2F2F2;
+        }
 
+        .main-content {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #FFF;
+            border-radius: 5px;
+        }
+
+        .message {
+            font-size: 20px;
+            padding: 10px;
+            color: #666;
+        }
+
+        .button {
+            font-size: 16px;
+            color: #FFF;
+            text-decoration: none;
+            background-color: #6BAC43;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="message">Yetkiniz Bu Sayfayı Gösteremez</div>
+        <div class="message">Eğer Sorun Olduğunu Düşünüyorsanız Admin ile iletişime Geçin</div>
+    </div>
+</body>
+</html>
 
 
 

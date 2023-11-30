@@ -3,11 +3,11 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@model List<VehicleViewModel>
+@model VehicleAndDuyuruViewModel
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <h4 class="page-title">Hoş Geldin @*@User.FindFirst("UserName").Value *@ !</h4>
+            <h4 class="page-title">Hoş Geldin @User.FindFirst("UserName").Value !</h4>
         </div>
     </div>
 </div>
@@ -75,6 +75,87 @@
 </div>
 
 
+    <div class="row">
+        <div class="col-md-8">
+
+       
+            <div class="card direct-chat direct-chat-primary" style="position: relative; left: 0px; top: 0px;">
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                    <h3 class="card-title">Admin Duyuruları</h3>
+                    
+                </div>
+
+                <div class="card-body">
+
+                    <div class="direct-chat-messages">
+
+                        <div class="direct-chat-msg">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Admin</span>
+                              
+                            </div>
+
+                            
+                        @foreach(var x in Model.Duyuru)
+                        {
+                            <img class="direct-chat-img" src="~/Photos/ae0c148d-0447-4078-8748-b4527ad9b20c.jpg" alt="message user image">
+                            <div class="direct-chat-text" style="margin-top:50px;">
+                               @x.DuyurAcıklama
+                            </div>
+                        }
+                        
+
+                        </div>
+                    </div>
+
+
+                 
+
+                </div>
+
+                <div class="card-footer">
+                    
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Üyelerimiz</h3>
+               
+            </div>
+
+            <div class="card-body p-0">
+                <ul class="users-list clearfix">
+                    @foreach(var x in Model.Users)
+                    {
+                        <li>
+                            <img src="~/Photos/@x.PhotoUrl" style="height:70px;width:70px;border-radius:50%" alt="User Image">
+                            <a class="users-list-name" href="#">@x.FullName</a>
+                            <span class="users-list-date">@x.Role</span>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+
+            
+
+        </div>
+
+
+          
+        </div>
+    </div>
+
+
+
+
+
+
+
+
 <div class="row">
     <div class="card">
         <div class="card-body p-0">
@@ -98,6 +179,7 @@
                                 <th>Resim</th>
                                 <th>Araç</th>
                                 <th>Arac Motoru</th>
+                                <th>Arac Marka</th>
                                 <th>Arac Tipi</th>
                                 <th>Günlük Kirası</th>
 
@@ -107,13 +189,14 @@
                             @{
                                 int i = 1;
                             }
-                           @foreach(var item in Model){
+                           @foreach(var item in Model.Vehicles){
                                 <tr>
                                     <td>@i</td>
-                                    <td><img src="~/Araba/@item.ResimData" style="height:100px;width:110px;border-radius:50%" /> @item.Resim</td>
+                                    <td><img src="~/Araba/@item.Resim" style="height:100px;width:110px;border-radius:50%" /> </td>
                                     <td>@item.AracAdı</td>
-                                    <td>@item.AracYakıtTuru</td>
-                                    <td>@item.AracKategoriTurü</td>
+                                    <td>@item.AracMotorTip</td>
+                                    <td>@item.aracMarka.aracmarka</td>
+                                    <td>@item.AracKategori.AracKategoriAdi</td>
                                     <td>
                                         <span class="badge bg-info-subtle text-info"> @item.Fiyat ₺</span>
                                         
@@ -132,7 +215,7 @@
 </div>
 
 
-
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
 
     
 

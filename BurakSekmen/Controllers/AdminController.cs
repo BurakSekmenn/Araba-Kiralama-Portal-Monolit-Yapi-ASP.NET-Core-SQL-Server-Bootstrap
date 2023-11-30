@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
+using System;
 
 namespace BurakSekmen.Controllers
 {
@@ -29,25 +31,26 @@ namespace BurakSekmen.Controllers
             ViewBag.yakıt=_appDbContext.AracYaks.Count().ToString();
             ViewBag.marka=_appDbContext.AracMarkas.Count().ToString();
 
+            var latestVehicles = _appDbContext.Vehicles
+             .Include(ay => ay.aracYakıt) // AracYakit tablosunu Arac ile birleştir
+             .Include(ak => ak.AracKategori) // AracYakit tablosunu AracKategori ile birleştir
+             .Include(at =>at.aracMarka)
+             .OrderByDescending(ay => ay.Id) // Sıralama kriterini belirt
+             .Take(5)
+             .ToList();
 
 
-            var araclarım = _appDbContext.Vehicles
-                  .Include(x => x.AracKategori)
-                  .Include(x => x.aracYakıt)
-                  .OrderByDescending(x => x.Id)
-                  .Take(5)
-                    .Select(x => new VehicleViewModel()
-                    {
-                        AracAdı = x.AracAdı,
-                        AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
-                        AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
-                        ResimData = x.Resim,
-                        Arackm = x.Arackm,
-                        Fiyat = x.Fiyat,
-                        Id = x.Id,
-                    })
-                     .ToList();
-            return View(araclarım);
+
+            VehicleAndDuyuruViewModel viewModel = new VehicleAndDuyuruViewModel
+            {
+                Vehicles = latestVehicles,
+                Duyuru = _appDbContext.Duyurs.Where(d => d.Durum == true).OrderByDescending(dy=>dy.Id).Take(3).ToList(),
+                Users = _appDbContext.Users.ToList(),
+            };
+
+            return View(viewModel);
+
+           
         }
         public IActionResult AccessDenied()
         {
@@ -160,6 +163,80 @@ namespace BurakSekmen.Controllers
                 return Json(new { success = false, message = "Güncelleme sırasında bir hata oluştu." });
             }
         }
-     
+
+
+        [Authorize(Roles = "admin")]
+        public IActionResult Duyuru()
+        {
+            var duyurugetir = _appDbContext.Duyurs.Select(x => new DuyuruViewModel()
+            {
+                Id = x.Id,
+                DuyurAcıklama=x.DuyurAcıklama,
+                Durum=x.Durum
+                
+            }).ToList();
+            return View(duyurugetir);
+        }
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DuyurEkle(DuyuruViewModel model)
+        {
+            var duyurukayıt = new Duyuru();
+            duyurukayıt.DuyurAcıklama = model.DuyurAcıklama;
+            duyurukayıt.Durum = model.Durum;
+            _appDbContext.Duyurs.Add(duyurukayıt);
+            await _appDbContext.SaveChangesAsync();
+            _notyfService.Success("Kayıt Ekleme Başarılı");
+            return RedirectToAction("Duyuru", "Admin");
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult BadgeUptade(bool Durum,DuyuruViewModel model)
+            {
+            bool yeniDurum = Durum;
+            var update = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
+            update.Durum = yeniDurum;
+            _appDbContext.Duyurs.Update(update);
+            _appDbContext.SaveChanges();
+            _notyfService.Success("Duyuru Durumu Güncellendi");
+            return RedirectToAction("Duyuru", "Admin");
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult DuyurGuncelle(int id)
+        {
+            var kayıtgetir = _appDbContext.Duyurs
+             .Where(x => x.Id == id)
+              .Select(x => new DuyuruViewModel()
+                {
+                    Id = x.Id,
+                    DuyurAcıklama = x.DuyurAcıklama,
+                    Durum = x.Durum,
+                 })
+                 .SingleOrDefault(); 
+
+            return View(kayıtgetir);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult DuyurGuncelle(DuyuruViewModel model)
+        {
+            var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
+            guncelle.DuyurAcıklama = model.DuyurAcıklama;
+            guncelle.Durum=model.Durum;
+            _appDbContext.Duyurs.Update(guncelle);
+            _appDbContext.SaveChanges();
+            _notyfService.Success("Kayıt Güncelleme Başarılı");
+            return RedirectToAction("Duyuru", "Admin");
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult DuyuruSil(int id)
+        {
+            var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == id);
+            _appDbContext.Duyurs.Remove(guncelle!);
+            _appDbContext.SaveChanges();    
+
+            _notyfService.Success("Kayıt Silme Başarılı");
+            return RedirectToAction("Duyuru", "Admin");
+
+        }
     }
 }

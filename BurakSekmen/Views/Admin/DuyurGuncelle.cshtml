@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "DuyurGuncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model DuyuruViewModel
+<div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Duyuru Tablosu</div>
+    <div class="card-body">
+        <form asp-action="DuyurGuncelle" asp-controller="Admin" method="post">
+
+            <input type="hidden" asp-for="Id" class="form-control">
+
+
+
+            <label asp-for="DuyurAcıklama"></label>
+            <input type="text" asp-for="DuyurAcıklama" class="form-control">
+            <span asp-validation-for="DuyurAcıklama" class="text-danger"></span>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  asp-for="Durum">
+                <label class="form-check-label" for="inlineCheckbox2">Aktif Mi </label>
+            </div>
+            <br />
+            <button class="btn btn-success">Güncelle</button>
+      </form>
+    </div>
+</div>
+
+
