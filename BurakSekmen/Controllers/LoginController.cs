@@ -97,9 +97,11 @@ namespace BurakSekmen.Controllers
             new Claim(ClaimTypes.Name, user.FullName),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.Email,user.Email),
             new Claim("UserName",user.UserName),
             new Claim("FullName",user.FullName),
-            new Claim("PhotoUrl",user.PhotoUrl)
+            new Claim("PhotoUrl",user.PhotoUrl),
+            new Claim("Email",user.Email),
            
             };
 

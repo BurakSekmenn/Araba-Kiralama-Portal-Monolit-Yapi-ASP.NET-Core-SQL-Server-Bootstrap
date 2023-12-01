@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "MailGonder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model MailViewModel
+
+<div class="row">
+    <div class="col-md-3">
+        <a asp-action="Index" asp-controller="Mail" class="btn btn-primary btn-block mb-3">Gelen Kutusuna Dön</a>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Klasör</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item active">
+                        <a asp-action="Index" asp-controller="Mail" class="nav-link">
+                            <i class="fas fa-inbox"></i> Gelen Kutusu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="GonderilenMail" asp-controller="Mail" class="nav-link">
+                            <i class="far fa-envelope"></i> Gönderdiğim Mesajlar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="col-md-9">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Mail Gönder</h3>
+            </div>
+            <form asp-action="MailGonder" asp-controller="Mail" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <input class="form-control" readonly placeholder="@User.FindFirst("Email").Value"  asp-for="Gonderici" >
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(x=>x.Alici,(List<SelectListItem>)ViewBag.dgr1,new {@class="form-control",required="required"})
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" rows="15" placeholder="Konu :" asp-for="Konu" >
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="15" placeholder="Göndermek İstediğiniz Mesajı Giriniz" :" asp-for="icerik" ></textarea>
+                    </div>
+
+
+                    <div class="card-footer">
+                        <div class="float-right">
+
+                            <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Gönder</button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </form>
+          
+
+        </div>
+
+
+    </div>
+
+</div>

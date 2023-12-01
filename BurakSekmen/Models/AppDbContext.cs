@@ -19,6 +19,8 @@ namespace BurakSekmen.Models
 
         public DbSet<Duyuru> Duyurs { get; set; }
 
+        public DbSet<Mail> Mails { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

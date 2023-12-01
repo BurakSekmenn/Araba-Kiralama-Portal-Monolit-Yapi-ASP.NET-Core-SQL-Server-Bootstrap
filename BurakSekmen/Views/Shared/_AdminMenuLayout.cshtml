@@ -1,4 +1,6 @@
-﻿<nav class="mt-2">
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
@@ -21,15 +23,25 @@
             </a>
         <li class="nav-item">
             <a asp-action="Duyuru" asp-controller="Admin" class="nav-link">
-                <i class="nav-icon"></i>
+                <i class="nav-icon nav-icon fas fa-th"></i>
+
                 <p>
                     Duyuru Ayarları
                 </p>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a asp-action="Index" asp-controller="Mail" class="nav-link">
+                <i class="nav-icon far fa-envelope"></i>
+                <p>
+                    Mail Kutum
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a asp-action="Index" asp-controller="Logout" class="nav-link">
-                <i class="nav-icon"></i>
+                <i class="nav-icon far fa-circle-xmark"></i>
 
                 <p>
                     Çıkış Yap
