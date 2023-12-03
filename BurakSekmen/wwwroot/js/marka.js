@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
        $("button.btn-secondary").click(function () {
-        // Ekle butonunu kapat
+      
         $("button.btn-info").hide();
     });
 
