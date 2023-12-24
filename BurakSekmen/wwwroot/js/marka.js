@@ -9,7 +9,7 @@
     function loadmarka() {
         $("#tbaraba tbody").empty();
         $.ajax({
-            url: "/Vehicle/ArabaBul",
+            url: "/Vehicle/Arababul",
             type: "Get",
             data: {},
             success: function (data) {

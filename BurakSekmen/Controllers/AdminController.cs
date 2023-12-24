@@ -238,5 +238,12 @@ namespace BurakSekmen.Controllers
             return RedirectToAction("Duyuru", "Admin");
 
         }
+        public IActionResult Deneme()
+        {
+            return View();
+        }
+
+
+
     }
 }
