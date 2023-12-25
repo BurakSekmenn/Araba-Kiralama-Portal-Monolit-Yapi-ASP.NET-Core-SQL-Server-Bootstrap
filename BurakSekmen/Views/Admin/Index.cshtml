@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <h4 class="page-title">Hoş Geldin @User.FindFirst("UserName").Value !</h4>
+            <h4 class="page-title">Hoş Geldin @User.Identity.Name </h4>
         </div>
     </div>
 </div>
@@ -133,7 +133,7 @@
                         <li>
                             <img src="~/Photos/@x.PhotoUrl" style="height:70px;width:70px;border-radius:50%" alt="User Image">
                             <a class="users-list-name" href="#">@x.FullName</a>
-                            <span class="users-list-date">@x.Role</span>
+                            <span class="users-list-date">@*@x.Role*@</span>
                         </li>
                     }
                 </ul>

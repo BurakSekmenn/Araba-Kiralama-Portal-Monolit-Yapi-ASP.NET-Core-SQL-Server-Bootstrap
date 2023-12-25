@@ -1,4 +1,5 @@
-using AspNetCoreHero.ToastNotification;
+﻿using AspNetCoreHero.ToastNotification;
+using BurakSekmen.Extensions;
 using BurakSekmen.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -18,27 +19,20 @@ builder.Services.AddNotyf(config =>
     config.IsDismissable = true;
     config.Position = NotyfPosition.BottomRight;
 });
+builder.Services.AddIdentityWithExt();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
+builder.Services.ConfigureApplicationCookie(opt =>
 {
-    opt.Cookie.Name = "CookieAutApp";
-    opt.ExpireTimeSpan = TimeSpan.FromDays(3);
+    var cookieBuilder = new CookieBuilder();
+    cookieBuilder.Name = "BurakAppCokie";
     opt.LoginPath = new PathString("/Login/Index");
     opt.LogoutPath = new PathString("/Logout/Index");
-    opt.AccessDeniedPath = new PathString("/Admin/AccessDenied");
-    opt.Cookie.HttpOnly = true;
-    opt.SlidingExpiration = true;
+    opt.Cookie = cookieBuilder;
+    opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+  
+
 });
-//builder.Services.ConfigureApplicationCookie(opt =>
-//{
-//    opt.Cookie.Name = "AppCookie";
-//    opt.LoginPath = new PathString("/Login/Index");
-//    opt.LogoutPath = new PathString("/Admin/Logout");
-//    opt.AccessDeniedPath = new PathString("/Admin/AccessDenied");
-//    opt.Cookie.HttpOnly = true;
-//    opt.ExpireTimeSpan = TimeSpan.FromDays(60);
-//    opt.SlidingExpiration = true;
-//});
+
 
 
 builder.Services.AddControllersWithViews();
@@ -60,8 +54,10 @@ app.UseRouting();
 app.UseAuthentication(); // Add this line
 app.UseAuthorization();
 
+
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

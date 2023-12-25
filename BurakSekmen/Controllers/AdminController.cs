@@ -3,10 +3,12 @@ using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 using System;
+using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
@@ -17,15 +19,32 @@ namespace BurakSekmen.Controllers
         private readonly IConfiguration _configuration;
         private readonly INotyfService _notyfService;
         private readonly AppDbContext _appDbContext;
-        public AdminController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, AppDbContext appDbContext = null)
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public AdminController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, AppDbContext appDbContext = null, UserManager<User> userManager = null, RoleManager<Role> roleManager = null, SignInManager<User> signInManager = null)
         {
             _logger = logger;
             _configuration = configuration;
             _notyfService = notyfService;
             _appDbContext = appDbContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
         }
+        private string userId => User.FindFirstValue(ClaimTypes.NameIdentifier);
+        public async void userImage()
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.UserProfile = user!.PhotoUrl;
+
+        }
+
+
         public IActionResult Index()
         {
+            userImage();
             ViewBag.toplam= _appDbContext.Vehicles.Count().ToString();
             ViewBag.kategori=_appDbContext.AracKategoris.Count().ToString();
             ViewBag.yakıt=_appDbContext.AracYaks.Count().ToString();
@@ -54,62 +73,70 @@ namespace BurakSekmen.Controllers
         }
         public IActionResult AccessDenied()
         {
+            userImage();
             return View();
         }
         [Authorize(Roles = "admin")]
         public IActionResult Role()
         {
-            var role = _appDbContext.Users.Select(x => new RoleViewModel()
-            {
-                Id = x.Id,
-                FullName = x.FullName,
-                UserName = x.UserName,
-                Role = x.Role
-            }).ToList();
-           return View  (role);
+            userImage();
+            // var role = _appDbContext.Users.Select(x => new RoleViewModel()
+            // {
+            //     Id = x.Id,
+            //     FullName = x.FullName,
+            //     UserName = x.UserName,
+            //     Role = x.Role
+            // }).ToList();
+            //return View(role);
+            return View();
         }
         [Authorize(Roles = "admin")]
         public JsonResult GetRole()
         {
-            var roles = _appDbContext.Users
-            .Select(x => new RoleViewModel
-             {
-            Id = x.Id,
-            FullName = x.FullName,
-            UserName = x.UserName,
-            Role = x.Role
-             })
-             .ToList();
-            return Json (roles);
+            userImage();
+            //var roles = _appDbContext.Users
+            //.Select(x => new RoleViewModel
+            // {
+            //Id = x.Id,
+            //FullName = x.FullName,
+            //UserName = x.UserName,
+            //Role = x.Role
+            // })
+            // .ToList();
+            return Json(true);
+            //return Json(roles);
         }
         [Authorize(Roles = "admin")]
         [HttpGet]
         [Route("/Admin/Edit/{id}")]
         public IActionResult Edit(Guid id)
         {
-            var user = _appDbContext.Users
-                        .Where(x => x.Id == id)
-                        .Select(x => new RoleViewModel
-                             {
-                                 Id = x.Id,
-                                 FullName = x.FullName,
-                                 UserName = x.UserName,
-                                 Role = x.Role
-                              }).FirstOrDefault();
-           
-            return View(user);
+            userImage();
+            //var user = _appDbContext.Users
+            //            .Where(x => x.Id == id)
+            //            .Select(x => new RoleViewModel
+            //                 {
+            //                     Id = x.Id,
+            //                     FullName = x.FullName,
+            //                     UserName = x.UserName,
+            //                     Role = x.Role
+            //                  }).FirstOrDefault();
+
+            //return View(user);
+            return View();
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Edit(RoleViewModel roleViewModel)
         {
+            userImage();
 
-            var user = _appDbContext.Users.FirstOrDefault(x => x.Id == roleViewModel.Id);
-            user.FullName = roleViewModel.FullName;
-            user.UserName = roleViewModel.UserName;
-            user.Role = roleViewModel.Role;
-            _appDbContext.SaveChanges();
-            _notyfService.Success("Kayıt Başarılı bir Şekilde Güncellendi");
+            //var user = _appDbContext.Users.FirstOrDefault(x => x.Id == roleViewModel.Id);
+            //user.FullName = roleViewModel.FullName;
+            //user.UserName = roleViewModel.UserName;
+            //user.Role = roleViewModel.Role;
+            //_appDbContext.SaveChanges();
+            //_notyfService.Success("Kayıt Başarılı bir Şekilde Güncellendi");
             return RedirectToAction("Role");
         }
 
@@ -117,7 +144,7 @@ namespace BurakSekmen.Controllers
        
         [Authorize(Roles = "admin")]
         public IActionResult SiteSeo(SiteSeoViewModel model) {
-          
+            userImage();
             var siteSeo = _appDbContext.Siteseos
                  .Where(x => x.Id == 1)
                  .Select(x => new SiteSeoViewModel
@@ -135,6 +162,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult SiteSeoUpdate(SiteSeoViewModel model)
         {
+            userImage();
             try
             {
                 var product = _appDbContext.Siteseos.SingleOrDefault(x => x.Id == 1);
@@ -168,6 +196,7 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Duyuru()
         {
+            userImage();
             var duyurugetir = _appDbContext.Duyurs.Select(x => new DuyuruViewModel()
             {
                 Id = x.Id,
@@ -180,6 +209,7 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DuyurEkle(DuyuruViewModel model)
         {
+            userImage();
             var duyurukayıt = new Duyuru();
             duyurukayıt.DuyurAcıklama = model.DuyurAcıklama;
             duyurukayıt.Durum = model.Durum;
@@ -191,6 +221,7 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult BadgeUptade(bool Durum,DuyuruViewModel model)
             {
+            userImage();
             bool yeniDurum = Durum;
             var update = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
             update.Durum = yeniDurum;
@@ -203,6 +234,7 @@ namespace BurakSekmen.Controllers
         [HttpGet]
         public IActionResult DuyurGuncelle(int id)
         {
+            userImage();
             var kayıtgetir = _appDbContext.Duyurs
              .Where(x => x.Id == id)
               .Select(x => new DuyuruViewModel()
@@ -219,6 +251,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult DuyurGuncelle(DuyuruViewModel model)
         {
+            userImage();
             var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
             guncelle.DuyurAcıklama = model.DuyurAcıklama;
             guncelle.Durum=model.Durum;
@@ -230,6 +263,7 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DuyuruSil(int id)
         {
+            userImage();
             var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == id);
             _appDbContext.Duyurs.Remove(guncelle!);
             _appDbContext.SaveChanges();    
@@ -240,6 +274,7 @@ namespace BurakSekmen.Controllers
         }
         public IActionResult Deneme()
         {
+            userImage();
             return View();
         }
 

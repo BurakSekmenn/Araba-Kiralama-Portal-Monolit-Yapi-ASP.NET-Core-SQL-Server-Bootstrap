@@ -1,10 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BurakSekmen.Models
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext: IdentityDbContext<User, Role, string>
     {
-        public DbSet<User> Users { get; set; }
+       
+
+
+
+
+
+
+
+
 
         public DbSet<Siteseo> Siteseos { get; set; }
 

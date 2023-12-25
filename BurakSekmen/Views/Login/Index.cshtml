@@ -2,11 +2,6 @@
 @{
     Layout = null;
 }
-
-
-@{
-    Layout = null;
-}
 @model LoginModel
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +28,8 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Oturumunuzu başlatmak için oturum açın</p>
-
+                <div asp-validation-summary=ModelOnly class="alert alert-danger" role="alert">
+                </div>
                 <form asp-action="Index" method="post">
                     <div class="input-group mb-3">
                         <input asp-for="UserName" class="form-control" type="text" placeholder="Kullanıcı Adını Giriniz." />

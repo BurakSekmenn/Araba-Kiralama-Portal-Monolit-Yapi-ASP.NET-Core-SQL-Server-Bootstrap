@@ -1,11 +1,13 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
@@ -16,26 +18,41 @@ namespace BurakSekmen.Controllers
         private readonly INotyfService _notyfService;
         private readonly AppDbContext _appDbContext;
         private readonly IFileProvider _fileProvider;
-
-        public VehicleController(ILogger<HomeController> logger, IConfiguration configuration, AppDbContext appDbContext, INotyfService notyfService, IFileProvider fileProvider)
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly SignInManager<User> _signInManager;
+        public VehicleController(ILogger<HomeController> logger, IConfiguration configuration, AppDbContext appDbContext, INotyfService notyfService, IFileProvider fileProvider, UserManager<User> userManager, RoleManager<Role> roleManager, SignInManager<User> signInManager)
         {
             _logger = logger;
             _configuration = configuration;
             _appDbContext = appDbContext;
             _notyfService = notyfService;
             _fileProvider = fileProvider;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
+        }
+        private string userId => User.FindFirstValue(ClaimTypes.NameIdentifier);
+        public async void userImage()
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.UserProfile = user!.PhotoUrl;
+
         }
         public IActionResult Index()
         {
+            userImage();
             return View();
         }
         public IActionResult VehicleCategory()
         {
+            userImage();
             return View();
         }
         [HttpGet]
         public IActionResult VehicleYakıt()
         {
+            userImage();
             var kayıtgetir = _appDbContext.AracYaks.Select(x => new VehicleAracKayıtViewModel()
             {
                 Id = x.Id,
@@ -47,6 +64,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public async Task<IActionResult> VehiclYakıtKaydet(VehicleAracKayıtViewModel model)
         {
+            userImage();
             var aracyakıt = new AracYakıt();
             aracyakıt.AracYakıtTuru = model.AracYakıtTuru;
             _appDbContext.AracYaks.Add(aracyakıt);
@@ -57,6 +75,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehiclYakıtDelete(VehicleAracKayıtViewModel model)
         {
+            userImage();
             var deletekayıt = _appDbContext.AracYaks.FirstOrDefault(x => x.Id == model.Id);
             _appDbContext.AracYaks.Remove(deletekayıt!);
             _appDbContext.SaveChangesAsync();
@@ -65,6 +84,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehiclYakıtUpdate(VehicleAracKayıtViewModel model)
         {
+            userImage();
             var guncelle = _appDbContext.AracYaks.SingleOrDefault(x => x.Id == model.Id);
             guncelle.AracYakıtTuru = model.AracYakıtTuru;
             _appDbContext.AracYaks.Update(guncelle);
@@ -74,6 +94,7 @@ namespace BurakSekmen.Controllers
 
         public IActionResult vehiclegetir()
         {
+            userImage();
 
             var kayıtgetir = _appDbContext.AracKategoris.Select(x => new VehicleKategoriKayitModel()
             {
@@ -84,6 +105,7 @@ namespace BurakSekmen.Controllers
         }
         public IActionResult GetUpdatedTableData()
         {
+            userImage();
             var kayıtgetir = _appDbContext.AracYaks.Select(x => new VehicleAracKayıtViewModel()
             {
                 Id = x.Id,
@@ -97,6 +119,7 @@ namespace BurakSekmen.Controllers
         [HttpGet]
         public IActionResult VehicleKategori()
         {
+            userImage();
             var kayıtgetir = _appDbContext.AracKategoris.Select(x => new VehicleKategoriKayitModel()
             {
                 Id = x.Id,
@@ -107,6 +130,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehicleKategoriKaydet(VehicleKategoriKayitModel model)
         {
+            userImage();
             var aracKategori = new AracKategori();
             aracKategori.AracKategoriAdi = model.AracKategoriAdi;
             _appDbContext.AracKategoris.Add(aracKategori);
@@ -117,6 +141,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehicleKategoriUpdate(VehicleKategoriKayitModel model)
         {
+            userImage();
             var guncelleveri = _appDbContext.AracKategoris.SingleOrDefault(x => x.Id == model.Id);
             guncelleveri.AracKategoriAdi = model.AracKategoriAdi;
             _appDbContext.AracKategoris.Update(guncelleveri);
@@ -126,6 +151,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehicleKategoriDelete(VehicleKategoriKayitModel model)
         {
+            userImage();
             var deleteveri = _appDbContext.AracKategoris.FirstOrDefault(x => x.Id == model.Id);
             if (deleteveri != null)
             {
@@ -138,7 +164,7 @@ namespace BurakSekmen.Controllers
         [HttpGet]
         public IActionResult KategoriArac(int id)
         {
-            
+            userImage();
             var araclarım = _appDbContext.Vehicles
             .Include(x => x.AracKategori)
             .Include(x => x.aracYakıt)
@@ -171,6 +197,7 @@ namespace BurakSekmen.Controllers
 
         public IActionResult Vehicle()
         {
+            userImage();
             var araclarım = _appDbContext.Vehicles
                  .Include(x => x.AracKategori)  
                  .Include(x => x.aracYakıt)     
@@ -194,6 +221,7 @@ namespace BurakSekmen.Controllers
 
         public IActionResult VehicleInsert()
         {
+            userImage();
             List<SelectListItem> yakıtbuldu = (from x in _appDbContext.AracYaks.ToList()
                                                select new SelectListItem
                                                {
@@ -229,6 +257,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehicleInsert(VehicleViewModel model)
         {
+            userImage();
             var rootfolder = _fileProvider.GetDirectoryContents("wwwroot");
             var photoUrl = "-";
             if (model.Resim.Length > 0 && model.Resim != null)
@@ -276,6 +305,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public IActionResult VehicleDelete(VehicleViewModel model)
         {
+            userImage();
             var silinecekveri = _appDbContext.Vehicles.FirstOrDefault(x => x.Id == model.Id);
 
             if (silinecekveri == null)
@@ -304,6 +334,7 @@ namespace BurakSekmen.Controllers
         [HttpGet]
         public IActionResult VehicleDetail(int id)
         {
+            userImage();
             List<SelectListItem> yakıtbuldu = (from x in _appDbContext.AracYaks.ToList()
                                                select new SelectListItem
                                                {
@@ -378,6 +409,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public async Task<IActionResult> VehicleDetail(VehicleViewModel model)
         {
+            userImage();
 
             var vehicleToUpdate = await _appDbContext.Vehicles.FindAsync(model.Id);
 
@@ -455,10 +487,12 @@ namespace BurakSekmen.Controllers
 
         public IActionResult ArabaMarka()
         {
+            userImage();
             return View();
         }
         public IActionResult Arababul()
         {
+            userImage();
             var arabagetir = _appDbContext.AracMarkas.Select(x => new ArabaMarkaViewModel()
             {
                 Id = x.Id,
@@ -469,6 +503,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public async Task<IActionResult> ArabaUpdate(ArabaMarkaViewModel model)
         {
+            userImage();
             var marka = _appDbContext.AracMarkas.SingleOrDefault(x => x.Id == model.Id);
             marka.aracmarka = model.aracmarka;
             _appDbContext.AracMarkas.Update(marka!);
@@ -478,6 +513,7 @@ namespace BurakSekmen.Controllers
         [HttpPost]
         public async Task<IActionResult> AracDelete(ArabaMarkaViewModel model)
         {
+            userImage();
             var deletekayıt = _appDbContext.AracMarkas.FirstOrDefault(x => x.Id == model.Id);
             _appDbContext.AracMarkas.Remove(deletekayıt!);
             await _appDbContext.SaveChangesAsync();
@@ -487,6 +523,7 @@ namespace BurakSekmen.Controllers
 
         public async Task<IActionResult> AracInsert(ArabaMarkaViewModel model)
         {
+            userImage();
             var aracmarka = new AracMarka();
             aracmarka.aracmarka = model.aracmarka;
             _appDbContext.AracMarkas.Add(aracmarka);

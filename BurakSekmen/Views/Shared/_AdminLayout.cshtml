@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    //var claims = User.Claims.ToList();
 }
 
 <!DOCTYPE html>
@@ -200,18 +201,25 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
+
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="~/Photos/@User.FindFirst("PhotoUrl")?.Value" class="img-circle elevation-2" style="width:100px;" alt="User Image">
+                        <img src="~/Photos/@ViewBag.UserProfile" />
                     </div>
                     <div class="info">
-                        <a asp-action="Index" asp-controller="Admin" class="d-block">
-                            @User.FindFirst("FullName")?.Value<br />
-                            <span>Hoşgeldin</span>!
-                        </a>
+                        @if (Model != null)
+                        {
+                            <a asp-action="Index" asp-controller="Admin" class="d-block">
+                                @User.Identity.Name<br />
+                                <span>Hoşgeldin</span>!
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="Account" class="d-block">Giriş Yap</a>
+                        }
                     </div>
                 </div>
-
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">

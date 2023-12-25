@@ -1,8 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BurakSekmen.Extensions;
 using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -18,56 +20,69 @@ namespace BurakSekmen.Controllers
         private readonly INotyfService _notyfService;
         private readonly AppDbContext _appDbContext;
         private readonly IFileProvider _fileProvider;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public LoginController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, AppDbContext appDbContext, IFileProvider fileProvider = null)
+        public LoginController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, AppDbContext appDbContext, IFileProvider fileProvider = null, UserManager<User> userManager = null, RoleManager<Role> roleManager = null, SignInManager<User> signInManager = null)
         {
             _logger = logger;
             _configuration = configuration;
             _notyfService = notyfService;
             _appDbContext = appDbContext;
             _fileProvider = fileProvider;
-            
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
         }
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            if(_appDbContext.Users.Count(s=>s.UserName == model.UserName) > 0)
-            {
-                _notyfService.Error("Girilen Kullanıcı Adı Kayıtlıdır!");
-                return View(model);
-            }
-            if(_appDbContext.Users.Count(s=>s.Email == model.Email) > 0) {
-                _notyfService.Error("Girilen E-Posta Adresi Kayıtlıdır!");
-                return View(model);
-            }
-
             var rootFolder = _fileProvider.GetDirectoryContents("wwwroot");
             var photoUrl = "-";
-            if (model.PhotoFile.Length>0 && model.PhotoFile !=null)
+            if (model.PhotoFile.Length > 0 && model.PhotoFile != null)
             {
-                var filename = Guid.NewGuid().ToString()+Path.GetExtension(model.PhotoFile.FileName);
+                var filename = Guid.NewGuid().ToString() + Path.GetExtension(model.PhotoFile.FileName);
                 var photoPath = Path.Combine(rootFolder.First(x => x.Name == "Photos").PhysicalPath, filename);
                 using var stream = new FileStream(photoPath, FileMode.Create);
                 model.PhotoFile.CopyTo(stream);
                 photoUrl = filename;
             }
 
-            var hashedpass = MD5Hash(model.Password);
-            var user = new User();
-            user.FullName = model.FullName; 
-            user.UserName = model.UserName;
-            user.Password = hashedpass;
-            user.Email = model.Email;
-            user.PhotoUrl = photoUrl;
-            user.Role = "Personel";
-            _appDbContext.Users.Add(user);
-            _appDbContext.SaveChanges();
+
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+
+            }
+            var identityResult = await _userManager.CreateAsync(new() { UserName = model.UserName,Email = model.Email,PhotoUrl = photoUrl,FullName = model.FullName},model.Password);
+
+            if (!identityResult.Succeeded)
+            {
+                foreach (var item in identityResult.Errors)
+                {
+                    ModelState.AddModelError("", item.Description);
+                }
+
+                return View(model);
+            }
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            var roleExist = await _roleManager.RoleExistsAsync("admin");
+            if (!roleExist)
+            {
+                var role = new Role { Name = "admin" };
+                await _roleManager.CreateAsync(role);
+            }
+
+            await _userManager.AddToRoleAsync(user, "admin");
             _notyfService.Success("Üye Kaydı Yapılmıştır. Oturum Açınız");
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Login");
+         
         }
         public string MD5Hash(string pass)
         {
@@ -76,44 +91,60 @@ namespace BurakSekmen.Controllers
             var hashed = password.MD5();
             return hashed;
         }
+
+
+
+
+
         public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public async  Task<IActionResult> Index(LoginModel model, string returnUrl=null)
+        public async  Task<IActionResult> Index(LoginModel model, string? returnUrl = null)
         {
-            var hashedpass = MD5Hash(model.Password);
-            var user = _appDbContext.Users.Where(s => s.UserName == model.UserName && s.Password == hashedpass).SingleOrDefault();
-            if (user == null)
+            returnUrl = returnUrl ?? Url.Action("Index", "Admin");
+
+            var hasUser = await _userManager.FindByNameAsync(model.UserName);
+
+            if (hasUser == null)
             {
-                _notyfService.Error("Kullanıcı Adı veya Parola Geçersizdir.");
+                ModelState.AddModelError(string.Empty, "Email Veya Şifre Yanlış");
+                _notyfService.Warning("Email Veya Şifrenizi Yanlış Girdiniz.");
                 return View();
             }
 
+            var result = await _signInManager.PasswordSignInAsync(hasUser, model.Password, model.KeepMe, true);
 
-            List<Claim> claims = new List<Claim>()
-            {
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Role, user.Role),
-            new Claim(ClaimTypes.Email,user.Email),
-            new Claim("UserName",user.UserName),
-            new Claim("FullName",user.FullName),
-            new Claim("PhotoUrl",user.PhotoUrl),
-            new Claim("Email",user.Email),
-           
-            };
 
-            ClaimsIdentity ıdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            ClaimsPrincipal principal = new ClaimsPrincipal(ıdentity);
-            AuthenticationProperties properties = new AuthenticationProperties()
+            if (result.Succeeded)
             {
-                AllowRefresh = true,
-                IsPersistent = model.KeepMe
-            };
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, properties);
-            return RedirectToAction("Index", "Admin");
+                _notyfService.Success("Giriş Başarılı");
+                return Redirect(returnUrl);
+                
+            }
+
+
+            ModelState.AddModelErroList(new List<string>()
+            {
+                "Email Veya Şifreniniz Yanlış"
+            });
+
+
+
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelErroList(new List<string>() { $"3 dakika boyunca giriş yapamazsınız." });
+                return View();
+            }
+
+            ModelState.AddModelErroList(new List<string>() { $"Email veya şifre yanlış(Başarısız Giriş Sayısı)", $"Başarısız Giriş Sayısı={await _userManager.GetAccessFailedCountAsync(hasUser)}" });
+
+
+
+            _notyfService.Warning("Hatalı Giriş");
+            return View();
+
         }
     }
 }

@@ -1,15 +1,14 @@
-﻿namespace BurakSekmen.Models
-{
-    public class User
-    {
-        public Guid Id { get; set; }
-        public string FullName { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
+﻿using Microsoft.AspNetCore.Identity;
 
-        public string Password { get; set; }
+namespace BurakSekmen.Models
+{
+    public class User : IdentityUser
+    {
+       
+        public string FullName { get; set; } 
+       
         public string PhotoUrl { get; set; }
        
-        public string Role { get; set; }
+
     }
 }
