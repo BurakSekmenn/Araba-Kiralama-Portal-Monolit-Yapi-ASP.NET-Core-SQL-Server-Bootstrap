@@ -27,6 +27,7 @@ namespace BurakSekmen.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId);
             ViewBag.UserProfile = user!.PhotoUrl;
+           
 
         }
 

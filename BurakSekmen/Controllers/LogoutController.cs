@@ -5,7 +5,7 @@ namespace BurakSekmen.Controllers
 {
     public class LogoutController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Login");

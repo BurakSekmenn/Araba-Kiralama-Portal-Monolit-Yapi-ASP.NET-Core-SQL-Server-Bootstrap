@@ -1,43 +1,58 @@
 ﻿$(document).ready(function () {
-       $("button.btn-secondary").click(function () {
-      
-        $("button.btn-info").hide();
+    $.ajax({
+        url: "/Admin/userImage",  // Controller'daki endpoint'iniz
+        type: "GET",  // veya "POST" gibi isteğin tipine göre değiştirilebilir
+        success: function (data) {
+            // Veriyi işleyebilir ve kullanabilirsiniz
+            console.log(data);
+        },
+        error: function (error) {
+            console.error("Error:", error);
+        }
     });
 
-    loadmarka();
 
-    function loadmarka() {
-        $("#tbaraba tbody").empty();
-        $.ajax({
-            url: "/Vehicle/Arababul",
-            type: "Get",
-            data: {},
-            success: function (data) {
-                var i = 1;
-                $.each(data, function (index, item) {
-                    var tr = $('<tr id="' + item.id + '"></tr>');
-                    tr.append('<td>' + i + '</td>');
-                    tr.append('<td>' + item.aracmarka + '</td>');
 
-                    var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
-                    btnGuncelle.click(function () {
-                        btnGuncelleClick(item.id, item.aracmarka);
-                    });
-                    var td = $('<td></td>');
-                    td.append(btnGuncelle);
-                    tr.append(td);
 
-                    $("#tbaraba tbody").append(tr);
-                    i++;
-                });
-            }
+           $("button.btn-secondary").click(function () {
+      
+            $("button.btn-info").hide();
         });
-    }
 
-    function btnGuncelleClick(id, aracmarka) {
-        $("#id").val(id);
-        $("#aracmarka").val(aracmarka);
-    }
+        loadmarka();
+
+        function loadmarka() {
+            $("#tbaraba tbody").empty();
+            $.ajax({
+                url: "/Vehicle/Arababul",
+                type: "Get",
+                data: {},
+                success: function (data) {
+                    var i = 1;
+                    $.each(data, function (index, item) {
+                        var tr = $('<tr id="' + item.id + '"></tr>');
+                        tr.append('<td>' + i + '</td>');
+                        tr.append('<td>' + item.aracmarka + '</td>');
+
+                        var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
+                        btnGuncelle.click(function () {
+                            btnGuncelleClick(item.id, item.aracmarka);
+                        });
+                        var td = $('<td></td>');
+                        td.append(btnGuncelle);
+                        tr.append(td);
+
+                        $("#tbaraba tbody").append(tr);
+                        i++;
+                    });
+                }
+            });
+        }
+
+        function btnGuncelleClick(id, aracmarka) {
+            $("#id").val(id);
+            $("#aracmarka").val(aracmarka);
+        }
 
  
 

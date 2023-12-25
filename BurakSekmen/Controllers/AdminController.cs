@@ -34,7 +34,8 @@ namespace BurakSekmen.Controllers
             _signInManager = signInManager;
         }
         private string userId => User.FindFirstValue(ClaimTypes.NameIdentifier);
-        public async void userImage()
+        private string mailadres => User.FindFirstValue(ClaimTypes.Email);
+        public async Task userImage()
         {
             var user = await _userManager.FindByIdAsync(userId);
             ViewBag.UserProfile = user!.PhotoUrl;
@@ -42,9 +43,9 @@ namespace BurakSekmen.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            userImage();
+            await userImage();
             ViewBag.toplam= _appDbContext.Vehicles.Count().ToString();
             ViewBag.kategori=_appDbContext.AracKategoris.Count().ToString();
             ViewBag.yakıt=_appDbContext.AracYaks.Count().ToString();
@@ -71,15 +72,15 @@ namespace BurakSekmen.Controllers
 
            
         }
-        public IActionResult AccessDenied()
+        public async Task<IActionResult> AccessDenied()
         {
-            userImage();
+            await userImage();
             return View();
         }
         [Authorize(Roles = "admin")]
-        public IActionResult Role()
+        public async Task<IActionResult> Role()
         {
-            userImage();
+            await userImage();
             // var role = _appDbContext.Users.Select(x => new RoleViewModel()
             // {
             //     Id = x.Id,
@@ -91,9 +92,9 @@ namespace BurakSekmen.Controllers
             return View();
         }
         [Authorize(Roles = "admin")]
-        public JsonResult GetRole()
+        public async Task<JsonResult> GetRole()
         {
-            userImage();
+            await userImage();
             //var roles = _appDbContext.Users
             //.Select(x => new RoleViewModel
             // {
@@ -109,9 +110,9 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         [HttpGet]
         [Route("/Admin/Edit/{id}")]
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            userImage();
+            await userImage();
             //var user = _appDbContext.Users
             //            .Where(x => x.Id == id)
             //            .Select(x => new RoleViewModel
@@ -127,9 +128,9 @@ namespace BurakSekmen.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult Edit(RoleViewModel roleViewModel)
+        public async Task<IActionResult> Edit(RoleViewModel roleViewModel)
         {
-            userImage();
+           await userImage();
 
             //var user = _appDbContext.Users.FirstOrDefault(x => x.Id == roleViewModel.Id);
             //user.FullName = roleViewModel.FullName;
@@ -143,8 +144,8 @@ namespace BurakSekmen.Controllers
 
        
         [Authorize(Roles = "admin")]
-        public IActionResult SiteSeo(SiteSeoViewModel model) {
-            userImage();
+        public async Task<IActionResult> SiteSeo(SiteSeoViewModel model) {
+            await userImage();
             var siteSeo = _appDbContext.Siteseos
                  .Where(x => x.Id == 1)
                  .Select(x => new SiteSeoViewModel
@@ -160,9 +161,9 @@ namespace BurakSekmen.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult SiteSeoUpdate(SiteSeoViewModel model)
+        public async Task<IActionResult> SiteSeoUpdate(SiteSeoViewModel model)
         {
-            userImage();
+            await userImage();
             try
             {
                 var product = _appDbContext.Siteseos.SingleOrDefault(x => x.Id == 1);
@@ -194,9 +195,9 @@ namespace BurakSekmen.Controllers
 
 
         [Authorize(Roles = "admin")]
-        public IActionResult Duyuru()
+        public async Task<IActionResult> Duyuru()
         {
-            userImage();
+            await userImage();
             var duyurugetir = _appDbContext.Duyurs.Select(x => new DuyuruViewModel()
             {
                 Id = x.Id,
@@ -209,7 +210,7 @@ namespace BurakSekmen.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DuyurEkle(DuyuruViewModel model)
         {
-            userImage();
+            await userImage();
             var duyurukayıt = new Duyuru();
             duyurukayıt.DuyurAcıklama = model.DuyurAcıklama;
             duyurukayıt.Durum = model.Durum;
@@ -219,9 +220,9 @@ namespace BurakSekmen.Controllers
             return RedirectToAction("Duyuru", "Admin");
         }
         [Authorize(Roles = "admin")]
-        public IActionResult BadgeUptade(bool Durum,DuyuruViewModel model)
+        public async Task<IActionResult> BadgeUptade(bool Durum,DuyuruViewModel model)
             {
-            userImage();
+            await userImage();
             bool yeniDurum = Durum;
             var update = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
             update.Durum = yeniDurum;
@@ -232,9 +233,9 @@ namespace BurakSekmen.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public IActionResult DuyurGuncelle(int id)
+        public async Task<IActionResult> DuyurGuncelle(int id)
         {
-            userImage();
+            await userImage();
             var kayıtgetir = _appDbContext.Duyurs
              .Where(x => x.Id == id)
               .Select(x => new DuyuruViewModel()
@@ -249,9 +250,9 @@ namespace BurakSekmen.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult DuyurGuncelle(DuyuruViewModel model)
+        public async Task<IActionResult> DuyurGuncelle(DuyuruViewModel model)
         {
-            userImage();
+            await userImage();
             var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == model.Id);
             guncelle.DuyurAcıklama = model.DuyurAcıklama;
             guncelle.Durum=model.Durum;
@@ -261,9 +262,9 @@ namespace BurakSekmen.Controllers
             return RedirectToAction("Duyuru", "Admin");
         }
         [Authorize(Roles = "admin")]
-        public IActionResult DuyuruSil(int id)
+        public async Task<IActionResult> DuyuruSil(int id)
         {
-            userImage();
+           await userImage();
             var guncelle = _appDbContext.Duyurs.SingleOrDefault(x => x.Id == id);
             _appDbContext.Duyurs.Remove(guncelle!);
             _appDbContext.SaveChanges();    
@@ -272,9 +273,9 @@ namespace BurakSekmen.Controllers
             return RedirectToAction("Duyuru", "Admin");
 
         }
-        public IActionResult Deneme()
+        public async Task<IActionResult> Deneme()
         {
-            userImage();
+            await userImage();
             return View();
         }
 

@@ -11,7 +11,9 @@ builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlCon"));
-});
+},ServiceLifetime.Transient);
+
+
 // Add services to the container.
 builder.Services.AddNotyf(config =>
 {
