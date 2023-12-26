@@ -1,14 +1,17 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
+using System.Data;
 using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
+    [Authorize(Roles = "admin,Uye")]
     public class MailController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -36,6 +39,7 @@ namespace BurakSekmen.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId);
             ViewBag.UserProfile = user!.PhotoUrl;
+            ViewBag.EmailAdres = user!.Email;
 
         }
         public async Task<IActionResult> Index()

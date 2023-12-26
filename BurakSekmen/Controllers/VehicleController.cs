@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin,Uye")]
     public class VehicleController : Controller
     {
         private readonly ILogger<HomeController> _logger;

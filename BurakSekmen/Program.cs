@@ -29,6 +29,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     cookieBuilder.Name = "BurakAppCokie";
     opt.LoginPath = new PathString("/Login/Index");
     opt.LogoutPath = new PathString("/Logout/Index");
+    opt.AccessDeniedPath = new PathString("/Admin/AccessDenied");
     opt.Cookie = cookieBuilder;
     opt.ExpireTimeSpan = TimeSpan.FromDays(60);
   
@@ -60,6 +61,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

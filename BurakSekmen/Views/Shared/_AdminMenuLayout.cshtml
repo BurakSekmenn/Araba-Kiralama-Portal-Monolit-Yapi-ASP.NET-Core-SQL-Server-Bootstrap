@@ -4,32 +4,39 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
+        @if (User.IsInRole("admin"))
+        {
+          
+            <li class="nav-header">Site Ayarları</li>
+            <li class="nav-item">
+                <a asp-action="SiteSeo" asp-controller="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-file"></i>
+                    <p>
+                        Seo Ayarları
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-action="Role" asp-controller="Admin" class="nav-link">
+                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <p>
+                        Role Ayarları
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-action="Duyuru" asp-controller="Admin" class="nav-link">
+                    <i class="nav-icon nav-icon fas fa-th"></i>
 
-        <li class="nav-header">Site Ayarları</li>
-        <li class="nav-item">
-            <a asp-action="SiteSeo" asp-controller="Admin" class="nav-link">
-                <i class="nav-icon fas fa-file"></i>
-                <p>
-                    Seo Ayarları
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-action="Role" asp-controller="Admin" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
-                <p>
-                    Role Ayarları
-                </p>
-            </a>
-        <li class="nav-item">
-            <a asp-action="Duyuru" asp-controller="Admin" class="nav-link">
-                <i class="nav-icon nav-icon fas fa-th"></i>
+                    <p>
+                        Duyuru Ayarları
+                    </p>
+                </a>
+            </li>
+        }
 
-                <p>
-                    Duyuru Ayarları
-                </p>
-            </a>
-        </li>
+
+        
 
         <li class="nav-item">
             <a asp-action="Index" asp-controller="Mail" class="nav-link">
@@ -74,7 +81,7 @@
                 <p>Arabalar</p>
             </a>
         </li>
-   
-     
+
+
     </ul>
 </nav>

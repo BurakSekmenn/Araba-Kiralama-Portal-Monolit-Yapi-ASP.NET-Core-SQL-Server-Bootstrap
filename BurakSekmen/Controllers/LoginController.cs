@@ -4,15 +4,18 @@ using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using NETCore.Encrypt.Extensions;
+using System.Data;
 using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
+    [Authorize(Roles = "admin,Uye")]
     public class LoginController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -35,10 +38,12 @@ namespace BurakSekmen.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
         }
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
@@ -72,14 +77,14 @@ namespace BurakSekmen.Controllers
                 return View(model);
             }
             var user = await _userManager.FindByNameAsync(model.UserName);
-            var roleExist = await _roleManager.RoleExistsAsync("admin");
+            var roleExist = await _roleManager.RoleExistsAsync("Uye");
             if (!roleExist)
             {
-                var role = new Role { Name = "admin" };
+                var role = new Role { Name = "Uye" };
                 await _roleManager.CreateAsync(role);
             }
 
-            await _userManager.AddToRoleAsync(user, "admin");
+            await _userManager.AddToRoleAsync(user, "Uye");
             _notyfService.Success("Üye Kaydı Yapılmıştır. Oturum Açınız");
             return RedirectToAction("Index","Login");
          
@@ -95,11 +100,12 @@ namespace BurakSekmen.Controllers
 
 
 
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public async  Task<IActionResult> Index(LoginModel model, string? returnUrl = null)
         {
@@ -113,6 +119,13 @@ namespace BurakSekmen.Controllers
                 _notyfService.Warning("Email Veya Şifrenizi Yanlış Girdiniz.");
                 return View();
             }
+
+            if (!await _userManager.IsInRoleAsync(hasUser, "admin") && !await _userManager.IsInRoleAsync(hasUser,"uye"))
+            {
+                ModelState.AddModelError(string.Empty, "Email Veya Şifre Yanlış");
+                return View();
+            }
+
 
             var result = await _signInManager.PasswordSignInAsync(hasUser, model.Password, model.KeepMe, true);
 

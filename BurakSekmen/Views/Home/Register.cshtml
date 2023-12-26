@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model RegisterModel
+
+<div id="wrapper">
+
+    
+    <!-- content begin -->
+
+    <div class="no-bottom no-top" id="content">
+        <div id="top"></div>
+
+
+        <!-- section begin -->
+        <section id="subheader" class="jarallax text-light">
+            <img src="~/site_tema/images/slider/3.jpg" class="jarallax-img" alt="">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h1>Kayıt Ol</h1>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- section close -->
+
+
+        <section aria-label="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <h3>
+                            Hesabınız yok mu? Şimdi üye Ol.
+                        </h3>
+                        <div class="alert alert-danger" asp-validation-summary="ModelOnly" enctype="multipart/form-data"></div>
+
+                        <div class="spacer-10"></div>
+
+                        <form name="contactForm" id='contact_form' class="form-border" asp-action="Register" asp-controller="Home" method="post" enctype="multipart/form-data">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Adınız:</label>
+                                        <input type='text' asp-for="FullName" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Email Adresiniz :</label>
+                                        <input type='text' asp-for="Email" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Kullanıcı Adınız.:</label>
+                                        <input type='text' asp-for="UserName" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Fotoğrafınız:</label>
+                                        <input asp-for="PhotoFile" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Şifreniz:</label>
+                                        <input type="password" asp-for="Password" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Şifrenizi Tekrar Giriniz:</label>
+                                        <input type="password" asp-for="PasswordConfirm" class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+
+                                    <div id='submit' class="pull-left">
+                                        <input type='submit' id='send_message' value='Kayıt Ol' class="btn-main color-2">
+                                    </div>
+
+                                    <div id='mail_success' class='success'>Your message has been sent successfully.</div>
+                                    <div id='mail_fail' class='error'>Sorry, error occured this time sending your message.</div>
+                                    <div class="clearfix"></div>
+
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+    <!-- content close -->
+
+    <a href="#" id="back-to-top"></a>
+
+   
+</div>

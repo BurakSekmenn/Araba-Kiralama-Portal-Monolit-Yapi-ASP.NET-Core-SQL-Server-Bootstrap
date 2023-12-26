@@ -1,0 +1,21 @@
+﻿@using System.Security.Claims;
+<div class="de-flex-col">
+    <div class="menu_side_area">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a style="color:#2C1; font-weight:bold;" > Hoşgeldin @User.FindFirstValue(ClaimTypes.Name)  </a>
+            <a class="btn-main btn-black" asp-action="Logout" asp-controller="Home">Çıkış Yap</a>
+        }
+        else
+        {
+            <a asp-action="Login" asp-controller="Home" class="btn-main">Oturum Aç</a>
+            <a class="btn-main btn-black" asp-action="Register" asp-controller="Home">Kayıt Ol</a>
+            <span id="menu-btn"></span>
+        }
+
+
+
+
+       
+    </div>
+</div>
