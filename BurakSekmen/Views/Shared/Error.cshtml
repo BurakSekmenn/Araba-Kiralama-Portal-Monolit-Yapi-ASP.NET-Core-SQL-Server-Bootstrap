@@ -3,23 +3,78 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<!DOCTYPE html>
+<html lang="zxx">
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+<head>
+    <title>Rentaly - Multipurpose Vehicle Car Rental Website Template</title>
+    <link rel="icon" href="images/icon.png" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website Template" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+    <!-- CSS Files
+    ================================================== -->
+    <link href="~/site_tema/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="~/site_tema/css/mdb.min.css" rel="stylesheet" type="text/css" id="mdb">
+    <link href="~/site_tema/css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="~/site_tema/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/site_tema/css/coloring.css" rel="stylesheet" type="text/css">
+    <!-- color scheme -->
+    <link id="colors" href="~/site_tema/css/colors/scheme-01.css" rel="stylesheet" type="text/css" />
+    <!-- countdown -->
+    <link id="colors" href="~/site_tema/css/jquery.countdown.css" rel="stylesheet" type="text/css" />
+</head>
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+
+
+
+
+<body class="dark-scheme">
+    <div id="wrapper">
+
+        <!-- page preloader begin -->
+        <div id="de-preloader"></div>
+        <!-- page preloader close -->
+        <!-- content begin -->
+        <div class="no-bottom no-top" id="content">
+            <div id="top"></div>
+            <div class="no-bottom no-top" id="content">
+                <div id="top"></div>
+                <section id="section-hero" class="jarallax text-light pt50 pb50 vertical-center" aria-label="section">
+                    <img src="images/background/11.jpg" class="jarallax-img" alt="">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h1>Bir Şeyler Eksik Gitti.</h1>
+                                <p>
+                                    Bu sayfanın eksik olduğu anlaşılıyor. Endişelenmeyin, en iyi ekibimiz olayla ilgileniyor.
+                                </p>
+                                <a asp-action="Index" asp-controller="Home" class="btn-main">Go Back</a>
+                                <div class="spacer-10"></div>
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                <h1 class="s2">
+                                    <span class="c1">404</span>
+                                    <span class="spacer-single"></span>
+                                    <span class="c3">Sayfa Bulunamadı</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!-- content close -->
+    </div>
+
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="~/site_tema/js/plugins.js"></script>
+    <script src="~/site_tema/js/designesia.js"></script>
+
+</body>
+
+</html>
+

@@ -98,7 +98,11 @@ namespace BurakSekmen.Controllers
         }
 
 
-
+        public async Task<IActionResult> AccessDenied()
+        {
+          
+            return View();
+        }
 
         [AllowAnonymous]
         public IActionResult Index()

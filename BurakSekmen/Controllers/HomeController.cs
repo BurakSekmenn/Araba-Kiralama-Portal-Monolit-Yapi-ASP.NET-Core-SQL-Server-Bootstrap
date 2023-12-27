@@ -2,9 +2,13 @@
 using BurakSekmen.Extensions;
 using BurakSekmen.Models;
 using BurakSekmen.ViewModels;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -19,8 +23,9 @@ namespace BurakSekmen.Controllers
         private readonly IFileProvider _fileProvider;
         private readonly RoleManager<Role> _roleManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly AppDbContext _appDbContext;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, UserManager<User> userManager, RoleManager<Role> roleManager, SignInManager<User> signInManager = null, IFileProvider fileProvider = null)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, INotyfService notyfService, UserManager<User> userManager, RoleManager<Role> roleManager, SignInManager<User> signInManager = null, IFileProvider fileProvider = null, AppDbContext appDbContext = null)
         {
             _logger = logger;
             _configuration = configuration;
@@ -29,22 +34,44 @@ namespace BurakSekmen.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
             _fileProvider = fileProvider;
+            _appDbContext = appDbContext;
         }
         private string userId => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public async void userImage()
+        public async Task userImage()
         {
             var user = await _userManager.FindByIdAsync(userId);
-            ViewBag.UserProfile = user!.PhotoUrl;
-           
 
+            ViewBag.UserProfile = user!.PhotoUrl;
+            ViewBag.FullName = user!.FullName;
         }
 
-        public IActionResult Index()
+            public IActionResult Index()
         {
+            List<int> istenenIds = new List<int> { 5, 2, 3, 4, 1 };
 
-            //userImage();
-            return View();
+            var veri = _appDbContext.Vehicles
+                .Include(ay => ay.aracYakıt)
+                .Include(ak => ak.AracKategori)
+                .Include(at => at.aracMarka)
+                .Where(x => istenenIds.Contains(x.Id))
+                .Select(x => new VehicleViewModel()
+                {
+                    Id = x.Id,
+                    AracAdı = x.AracAdı,
+                    AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
+                    AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
+                    Marka = x.aracMarka != null ? x.aracMarka.aracmarka : "Belirtilmemiş",
+                    ResimData = x.Resim,
+                    AracValizSayisi = x.AracValizSayisi,
+                    Fiyat = x.Fiyat,
+                    AracKoltukSayisi = x.AracKoltukSayisi,
+
+
+                }).Take(5).ToList();
+            return View(veri);
+
+
         }
         public IActionResult Top()
         {
@@ -64,7 +91,7 @@ namespace BurakSekmen.Controllers
             if (model.PhotoFile.Length > 0 && model.PhotoFile != null)
             {
                 var filename = Guid.NewGuid().ToString() + Path.GetExtension(model.PhotoFile.FileName);
-                var photoPath = Path.Combine(rootFolder.First(x => x.Name == "uyephotos").PhysicalPath, filename);
+                var photoPath = Path.Combine(rootFolder.First(x => x.Name == "Photos").PhysicalPath, filename);
                 using var stream = new FileStream(photoPath, FileMode.Create);
                 model.PhotoFile.CopyTo(stream);
                 photoUrl = filename;
@@ -98,6 +125,48 @@ namespace BurakSekmen.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Dashboard()
+        {
+            await userImage();
+            return View();
+        }
+       
+        [HttpPost]
+        public async Task<IActionResult> Dashboard(PasswordChangeViwModel request)
+        {
+           
+            var currentuser =await _userManager.FindByNameAsync(User.Identity!.Name!);
+
+            var checkoldPasword =await _userManager.CheckPasswordAsync(currentuser, request.PaswordOld);
+
+            if (!checkoldPasword)
+            {
+                ModelState.AddModelError(string.Empty, "Eski Şifreniz Yanlış");
+                _notyfService.Warning("Eski Şifreniz Yanlış");
+                return View();
+            }
+
+            var resultChangePassword = await _userManager.ChangePasswordAsync(currentuser, request.PaswordOld,request.PaswordNew);
+
+
+            if (!resultChangePassword.Succeeded)
+            {
+                ModelState.AddModelErroList(resultChangePassword.Errors.Select(x => x.Description).ToList());
+                return View();
+            }
+
+
+
+            await _userManager.UpdateSecurityStampAsync(currentuser);
+           
+
+            _notyfService.Success("Şifre Değişitirme İşlemi Başarılı Bir Şekilde Gerçekleştirildi");
+
+            return RedirectToAction("Index", "Home");          
+        }
+
+
 
 
 
@@ -124,8 +193,8 @@ namespace BurakSekmen.Controllers
 
             if (!await _userManager.IsInRoleAsync(hasUser, "normaluye"))
             {
-               ModelState.AddModelError(string.Empty, "Email Veya Şifre Yanlış");
-               return View();
+                ModelState.AddModelError(string.Empty, "Email Veya Şifre Yanlış");
+                return View();
             }
             var result = await _signInManager.PasswordSignInAsync(hasUser, model.Password, model.KeepMe, true);
 
@@ -157,7 +226,7 @@ namespace BurakSekmen.Controllers
 
             _notyfService.Warning("Hatalı Giriş");
             return View();
-       
+
         }
 
         public async Task<IActionResult> Logout(string? returnUrl = null)
@@ -166,18 +235,99 @@ namespace BurakSekmen.Controllers
             await _signInManager.SignOutAsync();
             return Redirect(returnUrl!);
         }
-
+        [HttpGet]
+        public IActionResult ArabaDetay(int ıd)
+        {
+            var araclarım = _appDbContext.Vehicles
+                 .Where(x => x.Id == ıd)
+                 .Include(ay => ay.aracYakıt)
+                 .Include(ak => ak.AracKategori)
+                 .Include(at => at.aracMarka)
+                 .Select(x => new VehicleViewModel
+                 {
+                     Id = x.Id,
+                     AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
+                     AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
+                     Marka = x.aracMarka != null ? x.aracMarka.aracmarka : "Belirtilmemiş",
+                     Arackm = x.Arackm,
+                     AracMotorTip= x.AracMotorTip,
+                     Klima = x.Klima,
+                     SesGirisi = x.SesGirisi,
+                     ilkyardımcantası = x.ilkyardımcantası,
+                     bluetooth = x.bluetooth,
+                     klimakontrol = x.klimakontrol,
+                     bagaj = x.bagaj,
+                     ResimData = x.Resim,
+                     Fiyat = x.Fiyat,
+                     AracAcıklama = x.AracAcıklama,
+                     AracAdı = x.AracAdı,
+                 }).ToList();
+            ViewBag.AracAdı = _appDbContext.Vehicles
+                              .Where(x => x.Id == ıd)
+                              .Select(y => y.AracAdı)
+    .                         FirstOrDefault();
+            return View(araclarım);
+        }
 
         public IActionResult Privacy()
         {
             //userImage();
             return View();
         }
+        
+        public IActionResult MyCars()
+        {
+            var veri = _appDbContext.Vehicles
+                .Include(ay => ay.aracYakıt)
+                .Include(ak => ak.AracKategori)
+                .Include(at => at.aracMarka)
+                .Select(x => new VehicleViewModel()
+                {
+                    Id = x.Id,
+                    AracAdı = x.AracAdı,
+                    AracKategoriTurü = x.AracKategori != null ? x.AracKategori.AracKategoriAdi : "Belirtilmemiş",
+                    AracYakıtTuru = x.aracYakıt != null ? x.aracYakıt.AracYakıtTuru : "Belirtilmemiş",
+                    Marka = x.aracMarka != null ? x.aracMarka.aracmarka : "Belirtilmemiş",
+                    ResimData = x.Resim,
+                    AracValizSayisi = x.AracValizSayisi,
+                    Fiyat = x.Fiyat,
+                    AracKoltukSayisi = x.AracKoltukSayisi,
+
+
+                }).ToList();
+
+            return View(veri);
+        }
+
+
+
+
+        public IActionResult AccessDenied()
+        {
+            // Access denied action implementation
+            return View();
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [Route("/StatusCodeError/{statusCode}")]
+        public IActionResult Error(int statusCode)
+        {
+            if (statusCode == 404)
+            {
+                ViewBag.ErrorMessage = "404 Page";
+            }
+
+            return View();
+        }
+
+
     }
 }

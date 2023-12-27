@@ -3,7 +3,7 @@
     <div class="menu_side_area">
         @if (User.Identity.IsAuthenticated)
         {
-            <a style="color:#2C1; font-weight:bold;" > Hoşgeldin @User.FindFirstValue(ClaimTypes.Name)  </a>
+            <a style="color:#2C1; font-weight:bold;" asp-action="Dashboard" asp-controller="Home"> Hoşgeldin @User.FindFirstValue(ClaimTypes.Name)  </a>
             <a class="btn-main btn-black" asp-action="Logout" asp-controller="Home">Çıkış Yap</a>
         }
         else
@@ -16,6 +16,6 @@
 
 
 
-       
+
     </div>
 </div>

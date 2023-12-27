@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "MyCars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<VehicleViewModel>
+
+<!-- section begin -->
+<section id="subheader" class="jarallax text-light">
+    <img src="~/site_tema/images/background/2.jpg" class="jarallax-img" alt="">
+    <div class="center-y relative text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Arabalarımız</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section close -->
+
+<section id="section-cars">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    @foreach(var item in Model)
+                    {
+                        <div class="col-xl-4 col-lg-6">
+                            <div class="de-item mb30">
+                                <div class="d-img">
+                                    <img src="~/Araba/@item.ResimData" class="img-fluid" alt="">
+                                </div>
+                                <div class="d-info">
+                                    <div class="d-text">
+                                        <h4>@item.AracAdı</h4>
+                                        <div class="d-item_like">
+                                            <i class="fa fa-heart"></i><span>25</span>
+                                        </div>
+                                        <div class="d-atr-group">
+                                            <span class="d-atr"><img src="~/site_tema/images/icons/1.svg" alt="">@item.AracKoltukSayisi</span>
+                                            <span class="d-atr"><img src="~/site_tema/images/icons/2.svg" alt="">@item.AracValizSayisi</span>
+
+                                            <span class="d-atr"><img src="~/site_tema/images/icons/4.svg" alt="">@item.AracKategoriTurü</span>
+                                        </div>
+                                        <div class="d-price">
+                                            Günlük Fiyatı <span>@item.Fiyat ₺</span>
+                                            <a class="btn-main" asp-action="ArabaDetay" asp-controller="Home" asp-route-ıd="@item.Id">Şimdi Kirala</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

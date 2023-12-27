@@ -6,9 +6,9 @@ namespace BurakSekmen.Extensions
     {
         public static void AddModelErroList(this ModelStateDictionary modelState, List<string> errors)
         {
-            errors.ForEach(e =>
+            errors.ForEach(x =>
             {
-                modelState.AddModelError(string.Empty, e);
+                modelState.AddModelError(string.Empty, x);
             });
 
 

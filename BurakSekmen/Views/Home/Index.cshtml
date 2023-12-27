@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model List<VehicleViewModel>
 <section id="section-hero" aria-label="section" class="full-height vertical-center" data-bgimage="url(/site_tema/images/background/7.jpg) bottom">
     <div class="container">
         <div class="row align-items-center">
@@ -39,34 +39,37 @@
             <div class="clearfix"></div>
 
             <div id="items-carousel" class="owl-carousel wow fadeIn">
-
-                <div class="col-lg-12">
-                    <div class="de-item mb30">
-                        <div class="d-img">
-                            <img src="images/cars/jeep-renegade.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="d-info">
-                            <div class="d-text">
-                                <h4>Jeep Renegade</h4>
-                                <div class="d-item_like">
-                                    <i class="fa fa-heart"></i><span>74</span>
-                                </div>
-                                <div class="d-atr-group">
-                                    <span class="d-atr"><img src="images/icons/1.svg" alt="">5</span>
-                                    <span class="d-atr"><img src="images/icons/2.svg" alt="">2</span>
-                                    <span class="d-atr"><img src="images/icons/3.svg" alt="">4</span>
-                                    <span class="d-atr"><img src="images/icons/4.svg" alt="">SUV</span>
-                                </div>
-                                <div class="d-price">
-                                    Daily rate from <span>$265</span>
-                                    <a class="btn-main" href="car-single.html">Rent Now</a>
+                @foreach(var x in Model)
+                {
+                    <div class="col-lg-12">
+                        <div class="de-item mb30">
+                            <div class="d-img">
+                                <img src="~/Araba/@x.ResimData" class="img-fluid" alt="">
+                            </div>
+                            <div class="d-info">
+                                <div class="d-text">
+                                    <h4>@x.AracAdı</h4>
+                                    <div class="d-item_like">
+                                        <i class="fa fa-heart"></i><span>74</span>
+                                    </div>
+                                    <div class="d-atr-group">
+                                        <span class="d-atr"><img src="~/site_tema/images/icons/1.svg" alt="">@x.AracKoltukSayisi</span>
+                                        <span class="d-atr"><img src="~/site_tema/images/icons/2.svg" alt="">@x.AracValizSayisi</span>
+                                        
+                                        <span class="d-atr"><img src="~/site_tema/images/icons/4.svg" alt="">@x.AracKategoriTurü</span>
+                                    </div>
+                                    <div class="d-price">
+                                        Günlük Fiyat <span>@x.Fiyat ₺ </span>
+                                        <a class="btn-main" asp-action="ArabaDetay" asp-controller="Home" asp-route-ıd="@x.Id" >Şimdi Kirala</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+                
 
-                <div class="col-lg-12">
+            @*    <div class="col-lg-12">
                     <div class="de-item mb30">
                         <div class="d-img">
                             <img src="images/cars/bmw-m5.jpg" class="img-fluid" alt="">
@@ -92,109 +95,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
-                    <div class="de-item mb30">
-                        <div class="d-img">
-                            <img src="images/cars/ferrari-enzo.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="d-info">
-                            <div class="d-text">
-                                <h4>Ferarri Enzo</h4>
-                                <div class="d-item_like">
-                                    <i class="fa fa-heart"></i><span>85</span>
-                                </div>
-                                <div class="d-atr-group">
-                                    <span class="d-atr"><img src="images/icons/1.svg" alt="">5</span>
-                                    <span class="d-atr"><img src="images/icons/2.svg" alt="">2</span>
-                                    <span class="d-atr"><img src="images/icons/3.svg" alt="">4</span>
-                                    <span class="d-atr"><img src="images/icons/4.svg" alt="">Exotic Car</span>
-                                </div>
-                                <div class="d-price">
-                                    Daily rate from <span>$167</span>
-                                    <a class="btn-main" href="car-single.html">Rent Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="de-item mb30">
-                        <div class="d-img">
-                            <img src="images/cars/ford-raptor.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="d-info">
-                            <div class="d-text">
-                                <h4>Ford Raptor</h4>
-                                <div class="d-item_like">
-                                    <i class="fa fa-heart"></i><span>59</span>
-                                </div>
-                                <div class="d-atr-group">
-                                    <span class="d-atr"><img src="images/icons/1.svg" alt="">5</span>
-                                    <span class="d-atr"><img src="images/icons/2.svg" alt="">2</span>
-                                    <span class="d-atr"><img src="images/icons/3.svg" alt="">4</span>
-                                    <span class="d-atr"><img src="images/icons/4.svg" alt="">Pickup Truck</span>
-                                </div>
-                                <div class="d-price">
-                                    Daily rate from <span>$147</span>
-                                    <a class="btn-main" href="car-single.html">Rent Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="de-item mb30">
-                        <div class="d-img">
-                            <img src="images/cars/mini-cooper.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="d-info">
-                            <div class="d-text">
-                                <h4>Mini Cooper</h4>
-                                <div class="d-item_like">
-                                    <i class="fa fa-heart"></i><span>19</span>
-                                </div>
-                                <div class="d-atr-group">
-                                    <span class="d-atr"><img src="images/icons/1.svg" alt="">5</span>
-                                    <span class="d-atr"><img src="images/icons/2.svg" alt="">2</span>
-                                    <span class="d-atr"><img src="images/icons/3.svg" alt="">4</span>
-                                    <span class="d-atr"><img src="images/icons/4.svg" alt="">Hatchback</span>
-                                </div>
-                                <div class="d-price">
-                                    Daily rate from <span>$238</span>
-                                    <a class="btn-main" href="car-single.html">Rent Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="de-item mb30">
-                        <div class="d-img">
-                            <img src="images/cars/vw-polo.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="d-info">
-                            <div class="d-text">
-                                <h4>VW Polo</h4>
-                                <div class="d-item_like">
-                                    <i class="fa fa-heart"></i><span>79</span>
-                                </div>
-                                <div class="d-atr-group">
-                                    <span class="d-atr"><img src="images/icons/1.svg" alt="">5</span>
-                                    <span class="d-atr"><img src="images/icons/2.svg" alt="">2</span>
-                                    <span class="d-atr"><img src="images/icons/3.svg" alt="">4</span>
-                                    <span class="d-atr"><img src="images/icons/4.svg" alt="">Hatchback</span>
-                                </div>
-                                <div class="d-price">
-                                    Daily rate from <span>$106</span>
-                                    <a class="btn-main" href="car-single.html">Rent Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               *@
 
             </div>
 

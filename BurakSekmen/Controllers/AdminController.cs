@@ -39,7 +39,6 @@ namespace BurakSekmen.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId);
             ViewBag.UserProfile = user!.PhotoUrl;
-
         }
 
 
@@ -72,11 +71,7 @@ namespace BurakSekmen.Controllers
 
            
         }
-        public async Task<IActionResult> AccessDenied()
-        {
-            await userImage();
-            return View();
-        }
+       
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Role()
         {

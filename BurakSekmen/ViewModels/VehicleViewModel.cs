@@ -47,11 +47,13 @@ namespace BurakSekmen.ViewModels
         [Required(ErrorMessage = "Günlük Fiyatını Giriniz: !")]
         public string Fiyat { get; set; }
 
-  
+
         public string ResimData { get; set; }
 
         public string AracKategoriTurü { get; set; }
         public string AracYakıtTuru { get; set; }
+
+        public string Marka {get;set;}
 
         public bool Klima { get; set; }
         public bool CocukKoltugu { get; set; }

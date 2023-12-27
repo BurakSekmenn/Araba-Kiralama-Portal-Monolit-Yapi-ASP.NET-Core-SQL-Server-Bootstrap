@@ -1,0 +1,93 @@
+﻿@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PasswordChangeViwModel
+<section id="subheader" class="jarallax text-light">
+    <img src="~/site_tema/images/background/14.jpg" class="jarallax-img" alt="">
+    <div class="center-y relative text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Profilim</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section close -->
+
+<section id="section-cars" class="bg-gray-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb30">
+                <div class="card p-4 rounded-5">
+                    <div class="profile_avatar">
+                        <div class="profile_img">
+                            <img src="~/Photos/@ViewBag.UserProfile" alt="">
+                        </div>
+                        <div class="profile_name">
+                            <h4>
+                                 @User.Identity.Name
+                                <span class="profile_username text-gray">@User.FindFirstValue(ClaimTypes.Email)</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="spacer-20"></div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="card p-4  rounded-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="form-create-item" asp-action="Dashboard" asp-controller="Home" >
+                                <div class="de_tab tab_simple">
+
+                                    <ul class="de_nav">
+                                        <li class="active"><span>Profile</span></li>
+
+                                    </ul>
+
+                                    <div class="de_tab_content">
+                                        <div class="tab-1">
+                                            <div class="row">
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Adınız Soyadını:</h5>
+                                                    <input asp-for="userName" class="form-control" placeholder="@ViewBag.FullName" disabled />
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>E-Mail Adresinizs</h5>
+                                                    <input type="text" asp-for="Email" class="form-control" placeholder="@User.FindFirstValue(ClaimTypes.Email)" disabled />
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Eski Şifreniz</h5>
+                                                    <input type="Password" asp-for="PaswordOld" class="form-control" placeholder="********" />
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Yeni Şifreniz</h5>
+                                                    <input type="Password" asp-for="PaswordNew" class="form-control" placeholder="********" />
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Yeni Şifrenizi Tekrar Giriniz.</h5>
+                                                    <input type="Password" asp-for="PaswordConfirm" class="form-control" placeholder="********" />
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="btn-main" value="Bilgilerimi Guncelle">
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

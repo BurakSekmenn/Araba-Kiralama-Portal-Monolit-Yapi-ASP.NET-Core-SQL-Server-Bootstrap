@@ -29,7 +29,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     cookieBuilder.Name = "BurakAppCokie";
     opt.LoginPath = new PathString("/Login/Index");
     opt.LogoutPath = new PathString("/Logout/Index");
-    opt.AccessDeniedPath = new PathString("/Admin/AccessDenied");
+    opt.AccessDeniedPath = new PathString("/Login/Index");
     opt.Cookie = cookieBuilder;
     opt.ExpireTimeSpan = TimeSpan.FromDays(60);
   
@@ -49,15 +49,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseStatusCodePagesWithRedirects("/StatusCodeError/{0}");
 
+app.UseStatusCodePages();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication(); // Add this line
 app.UseAuthorization();
-
-
 
 app.MapControllerRoute(
     name: "default",
