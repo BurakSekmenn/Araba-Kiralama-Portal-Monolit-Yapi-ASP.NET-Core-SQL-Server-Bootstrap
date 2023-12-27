@@ -8,7 +8,7 @@ namespace BurakSekmen.Models
         public string FullName { get; set; } 
        
         public string PhotoUrl { get; set; }
-       
 
+     
     }
 }

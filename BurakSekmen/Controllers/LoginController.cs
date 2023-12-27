@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
-    [Authorize(Roles = "admin,Uye")]
+    [Authorize(Roles = "admin,calisan")]
     public class LoginController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -77,14 +77,14 @@ namespace BurakSekmen.Controllers
                 return View(model);
             }
             var user = await _userManager.FindByNameAsync(model.UserName);
-            var roleExist = await _roleManager.RoleExistsAsync("Uye");
+            var roleExist = await _roleManager.RoleExistsAsync("calisan");
             if (!roleExist)
             {
-                var role = new Role { Name = "Uye" };
+                var role = new Role { Name = "calisan" };
                 await _roleManager.CreateAsync(role);
             }
 
-            await _userManager.AddToRoleAsync(user, "Uye");
+            await _userManager.AddToRoleAsync(user, "calisan");
             _notyfService.Success("Üye Kaydı Yapılmıştır. Oturum Açınız");
             return RedirectToAction("Index","Login");
          
@@ -124,7 +124,7 @@ namespace BurakSekmen.Controllers
                 return View();
             }
 
-            if (!await _userManager.IsInRoleAsync(hasUser, "admin") && !await _userManager.IsInRoleAsync(hasUser,"uye"))
+            if (!await _userManager.IsInRoleAsync(hasUser, "admin") && !await _userManager.IsInRoleAsync(hasUser, "calisan"))
             {
                 ModelState.AddModelError(string.Empty, "Email Veya Şifre Yanlış");
                 return View();

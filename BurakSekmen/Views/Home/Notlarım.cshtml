@@ -1,0 +1,92 @@
+﻿@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Notlarım";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="subheader" class="jarallax text-light">
+    <img src="~/site_tema/images/background/14.jpg" class="jarallax-img" alt="">
+    <div class="center-y relative text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Profilim</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section close -->
+
+<section id="section-cars" class="bg-gray-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb30">
+                <div class="card p-4 rounded-5">
+                    <div class="profile_avatar">
+                        <div class="profile_img">
+                            <img src="~/Photos/@ViewBag.UserProfile" alt="">
+                        </div>
+                        <div class="profile_name">
+                            <h4>
+                                @User.Identity.Name
+                                <span class="profile_username text-gray">@User.FindFirstValue(ClaimTypes.Email)</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="spacer-20"></div>
+                    <ul class="menu-col">
+                        <li><a asp-action="Dashboard" asp-controller="Home" ><i class="fa fa-home"></i>Profil</a></li>
+                        <li><a asp-action="Notlarım" asp-controller="Home" class="active" ><i class="icon-book-open"></i>Notlarım</a></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out"></i>Çıkış Yap</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="card mb-4" style="margin-top:20px;">
+                    <div class="card-header"><i class="icon-book-open"></i> Notlarım</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                            <table class="table de-table" id="tbaraba" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Not No</th>
+                                    <th>Not İçerik </th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>                           
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                <div class="card mb-4" style="margin-top:20px;">
+                    <div class="card-header"><i class="icon-gears"></i> Nolarım Tablosu İşlemler</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <form>
+                            <input type="hidden" name="id" id="id" />
+                            <label>Not İçerik</label>
+                                <input type="text" class="form-control" name="not" id="not" /><br />
+                            <button class="btn btn-success">Güncelleme Yap</button>
+                            <button class="btn btn-danger">Sil</button>        
+                            <button class="btn btn-info" id="ekleButton">Yeni Not Ekle</button>
+                        </form>
+                       
+                    </div>
+                </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</section>
+
+@section Script{
+    <script src="~/js/usernots.js"></script>
+}

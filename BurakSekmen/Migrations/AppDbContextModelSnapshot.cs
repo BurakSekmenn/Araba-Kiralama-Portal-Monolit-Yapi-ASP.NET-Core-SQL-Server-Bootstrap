@@ -37,7 +37,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AracKategoris", (string)null);
+                    b.ToTable("AracKategoris");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.AracMarka", b =>
@@ -55,7 +55,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AracMarkas", (string)null);
+                    b.ToTable("AracMarkas");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.AracYakıt", b =>
@@ -73,7 +73,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AracYaks", (string)null);
+                    b.ToTable("AracYaks");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.Duyuru", b =>
@@ -94,7 +94,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Duyurs", (string)null);
+                    b.ToTable("Duyurs");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.Mail", b =>
@@ -123,7 +123,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mails", (string)null);
+                    b.ToTable("Mails");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.Role", b =>
@@ -183,7 +183,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Siteseos", (string)null);
+                    b.ToTable("Siteseos");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.User", b =>
@@ -257,6 +257,27 @@ namespace BurakSekmen.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BurakSekmen.Models.UserNot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Not")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserNots");
                 });
 
             modelBuilder.Entity("BurakSekmen.Models.Vehicle", b =>
@@ -371,7 +392,7 @@ namespace BurakSekmen.Migrations
 
                     b.HasIndex("AracYakıId");
 
-                    b.ToTable("Vehicles", (string)null);
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

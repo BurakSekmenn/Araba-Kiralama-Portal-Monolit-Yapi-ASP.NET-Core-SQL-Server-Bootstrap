@@ -153,7 +153,8 @@ namespace BurakSekmen.Controllers
             if (!resultChangePassword.Succeeded)
             {
                 ModelState.AddModelErroList(resultChangePassword.Errors.Select(x => x.Description).ToList());
-                return View();
+                _notyfService.Error("Yeni şifre ve yeni şifre tekrarı birbirini aynısı olmalıdır.");
+                return RedirectToAction("Dashboard", "Home");
             }
 
 
@@ -163,15 +164,8 @@ namespace BurakSekmen.Controllers
 
             _notyfService.Success("Şifre Değişitirme İşlemi Başarılı Bir Şekilde Gerçekleştirildi");
 
-            return RedirectToAction("Index", "Home");          
+            return RedirectToAction("Dashboard", "Home");
         }
-
-
-
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> Login()
         {
@@ -299,6 +293,62 @@ namespace BurakSekmen.Controllers
             return View(veri);
         }
 
+        public async Task<IActionResult> Notlarım()
+        {
+            await userImage();
+            return View();
+        }
+        public async Task<IActionResult> NotBul()
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var username = user!.UserName;
+            await userImage();
+            
+            var notGetir = _appDbContext.UserNots.Where(x=>x.UserName == username).Select(x => new UserNotViewModel()
+            {
+                Id = x.Id,
+                Not = x.Not,
+            }).ToList();
+            return Json(notGetir);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> NotUpdate(UserNotViewModel model)
+        {
+            await userImage();
+            var nots = _appDbContext.UserNots.SingleOrDefault(x => x.Id == model.Id);
+            nots!.Not = model.Not;
+            _appDbContext.UserNots.Update(nots!);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> NotDelete(UserNotViewModel model)
+        {
+            await userImage();
+            var deletekayıt = _appDbContext.UserNots.FirstOrDefault(x => x.Id == model.Id);
+            _appDbContext.UserNots.Remove(deletekayıt!);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> NotInsert(UserNotViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var username = user!.UserName;
+            await userImage();
+            var notekle = new UserNot();
+            notekle.Not = model.Not;
+            notekle.UserName = username!;
+            _appDbContext.UserNots.Add(notekle);
+            await _appDbContext.SaveChangesAsync();
+            return Json(new { success = true });
+        }
 
 
 

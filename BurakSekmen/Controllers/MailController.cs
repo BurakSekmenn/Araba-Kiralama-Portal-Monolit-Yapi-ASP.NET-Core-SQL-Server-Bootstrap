@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace BurakSekmen.Controllers
 {
-    [Authorize(Roles = "admin,Uye")]
+    [Authorize(Roles = "admin,calisan")]
     public class MailController : Controller
     {
         private readonly ILogger<HomeController> _logger;
