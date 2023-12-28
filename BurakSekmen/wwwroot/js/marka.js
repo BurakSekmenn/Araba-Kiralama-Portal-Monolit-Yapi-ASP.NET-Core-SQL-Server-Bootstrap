@@ -14,64 +14,78 @@
 
 
 
-           $("button.btn-secondary").click(function () {
-      
-            $("button.btn-info").hide();
-        });
+    $("button.btn-secondary").click(function () {
 
-        loadmarka();
+        $("button.btn-info").hide();
+    });
 
-        function loadmarka() {
-            $("#tbaraba tbody").empty();
-            $.ajax({
-                url: "/Vehicle/Arababul",
-                type: "Get",
-                data: {},
-                success: function (data) {
-                    var i = 1;
-                    $.each(data, function (index, item) {
-                        var tr = $('<tr id="' + item.id + '"></tr>');
-                        tr.append('<td>' + i + '</td>');
-                        tr.append('<td>' + item.aracmarka + '</td>');
+    loadmarka();
 
-                        var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
-                        btnGuncelle.click(function () {
-                            btnGuncelleClick(item.id, item.aracmarka);
-                        });
-                        var td = $('<td></td>');
-                        td.append(btnGuncelle);
-                        tr.append(td);
+    function loadmarka() {
+        $("#tbaraba tbody").empty();
+        $.ajax({
+            url: "/Vehicle/Arababul",
+            type: "Get",
+            data: {},
+            success: function (data) {
+                var i = 1;
+                $.each(data, function (index, item) {
+                    var tr = $('<tr id="' + item.id + '"></tr>');
+                    tr.append('<td>' + i + '</td>');
+                    tr.append('<td>' + item.aracmarka + '</td>');
 
-                        $("#tbaraba tbody").append(tr);
-                        i++;
+                    var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
+                    btnGuncelle.click(function () {
+                        btnGuncelleClick(item.id, item.aracmarka);
                     });
-                }
-            });
-        }
+                    var td = $('<td></td>');
+                    td.append(btnGuncelle);
+                    tr.append(td);
 
-        function btnGuncelleClick(id, aracmarka) {
-            $("#id").val(id);
-            $("#aracmarka").val(aracmarka);
-        }
+                    $("#tbaraba tbody").append(tr);
+                    i++;
+                });
+            }
+        });
+    }
 
- 
+    function btnGuncelleClick(id, aracmarka) {
+        $("#id").val(id);
+        $("#aracmarka").val(aracmarka);
+    }
+
+
 
 
 
     $("button.btn-success").click(function () {
-        event.preventDefault(); 
+        event.preventDefault();
 
         var id = $("#id").val();
         var aracmarka = $("#aracmarka").val();
 
         if (aracmarka.trim() === "") {
-           
+
             Swal.fire({
                 icon: 'error',
                 title: 'Hata!',
                 text: 'Araç marka Lütfen Düzenle deyip güncelleme yapınız.',
+                    showClass: {
+                        popup: `
+                             animate__animated
+                             animate__fadeInUp
+                             animate__faster
+                            `
+                    },
+                hideClass: {
+                    popup: `
+                            animate__animated
+                            animate__fadeOutDown
+                            animate__faster
+                             `
+                }
             });
-            return; 
+            return;
         }
         if (id.trim() === "") {
 
@@ -85,7 +99,7 @@
 
 
 
-  
+
         $.ajax({
             url: "/Vehicle/ArabaUpdate",
             type: "POST",
@@ -107,7 +121,7 @@
     });
 
     $("button.btn-danger").click(function () {
-        event.preventDefault(); 
+        event.preventDefault();
 
         var id = $("#id").val();
         var aracmarka = $("#aracmarka").val();
@@ -118,9 +132,9 @@
                 title: 'Hata!',
                 text: 'Araç marka Lütfen Düzenle deyip silme işlemi yapınız.',
             });
-            return; 
+            return;
         }
-    
+
         $.ajax({
             url: "/Vehicle/AracDelete",
             type: "POST",
@@ -141,14 +155,14 @@
         });
     });
     $("button.btn-info").click(function () {
-        event.preventDefault(); 
+        event.preventDefault();
 
         var id = $("#id").val();
         var aracmarka = $("#aracmarka").val();
 
-       
+
         if (aracmarka.trim() === "") {
-       
+
             Swal.fire({
                 icon: 'error',
                 title: 'Hata!',
@@ -158,7 +172,7 @@
         }
 
 
-      
+
 
 
         // AJAX kullanarak sunucuya verileri gönder

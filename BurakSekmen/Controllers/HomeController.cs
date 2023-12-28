@@ -367,16 +367,16 @@ namespace BurakSekmen.Controllers
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [Route("/StatusCodeError/{statusCode}")]
-        public IActionResult Error(int statusCode)
-        {
-            if (statusCode == 404)
-            {
-                ViewBag.ErrorMessage = "404 Page";
-            }
+        //[Route("/StatusCodeError/{statusCode}")]
+        //public IActionResult Error(int statusCode)
+        //{
+        //    if (statusCode == 404)
+        //    {
+        //        ViewBag.ErrorMessage = "404 Page";
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
     }

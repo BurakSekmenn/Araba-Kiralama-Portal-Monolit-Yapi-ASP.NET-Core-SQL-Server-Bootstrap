@@ -180,14 +180,14 @@
                     <div class="spacer-30"></div>
                     <div class="de-box mb25">
                         <form name="contactForm" id='contact_form' method="post">
-                            <h4>Booking this car</h4>
+                            <h4>Arabayı Kiralayın</h4>
 
                             <div class="spacer-20"></div>
 
                             <div class="row">
                                 <div class="col-lg-12 mb20">
-                                    <h5>Pick Up Location</h5>
-                                    <input type="text" name="PickupLocation" onfocus="geolocate()" placeholder="Enter your pickup location" id="autocomplete" autocomplete="off" class="form-control">
+                                    <h5>Teslim Alma Konumunuz</h5>
+                                    <input type="text" name="PickupLocation" onfocus="geolocate()" placeholder="Teslim Alma Konumunuzu Giriniz." id="autocomplete" autocomplete="off" class="form-control">
 
                                     <div class="jls-address-preview jls-address-preview--hidden">
                                         <div class="jls-address-preview__header">
@@ -196,8 +196,10 @@
                                 </div>
 
                                 <div class="col-lg-12 mb20">
-                                    <h5>Drop Off Location</h5>
-                                    <input type="text" name="DropoffLocation" onfocus="geolocate()" placeholder="Enter your dropoff location" id="autocomplete2" autocomplete="off" class="form-control">
+                                    <h5>
+                                        Bırakma Konumu
+                                    </h5>
+                                    <input type="text" name="DropoffLocation" onfocus="geolocate()" placeholder="Bırkama Konumunu Giriniz." id="autocomplete2" autocomplete="off" class="form-control">
 
                                     <div class="jls-address-preview jls-address-preview--hidden">
                                         <div class="jls-address-preview__header">
@@ -205,12 +207,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 mb20">
-                                    <h5>Pick Up Date & Time</h5>
+                                <div claass="col-lg-12 mb20">
+                                    <h5>Alma Tarihi & Zaman</h5>
                                     <div class="date-time-field">
-                                        <input type="text" id="date-picker" name="Pick Up Date" value="">
-                                        <select name="Pick Up Time" id="pickup-time">
-                                            <option selected disabled value="Select time">Time</option>
+                                        <input type="text" id="date-picker" name="Tarihi Giriniz" value="">
+                                        <select name="Saati Seçiniz" id="pickup-time">
+                                            <option selected disabled value="Select time">Saat</option>
                                             <option value="00:00">00:00</option>
                                             <option value="00:30">00:30</option>
                                             <option value="01:00">01:00</option>
@@ -264,11 +266,11 @@
                                 </div>
 
                                 <div class="col-lg-12 mb20">
-                                    <h5>Return Date & Time</h5>
+                                    <h5>Bırakma Tarihi & Zamanı</h5>
                                     <div class="date-time-field">
                                         <input type="text" id="date-picker-2" name="Collection Date" value="">
                                         <select name="Collection Time" id="collection-time">
-                                            <option selected disabled value="Select time">Time</option>
+                                            <option selected disabled value="Select time">Saat</option>
                                             <option value="00:00">00:00</option>
                                             <option value="00:30">00:30</option>
                                             <option value="01:00">01:00</option>
@@ -322,7 +324,7 @@
                                 </div>
                             </div>
 
-                            <input type='submit' id='send_message' value='Book Now' class="btn-main btn-fullwidth">
+                            <input type='submit' id='send_message' value='Kirala' class="btn-main btn-fullwidth">
 
                             <div class="clearfix"></div>
 
