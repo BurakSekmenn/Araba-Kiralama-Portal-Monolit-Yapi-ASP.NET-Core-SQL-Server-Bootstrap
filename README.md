@@ -18,22 +18,19 @@ Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://www.youtube.com/
   
 ## Ekran Görüntüleri
 Veritabanı Şeması
+<img src="https://i.hizliresim.com/4acpeo1.png">
 
 
+Ön Yüz Görüntüleri!
+<img src="https://i.hizliresim.com/mduv1zm.png">
+<img src="https://i.hizliresim.com/snvm1bb.png">
+<img src="https://i.hizliresim.com/5afmx9r.jpg">
+<img src="https://i.hizliresim.com/3kzqz0b.png">
+<img src="https://i.hizliresim.com/g7nay4u.jpg">
 
-Ön Yüz Tasarımı!
-<img src="https://img.imgyukle.com/2023/12/29/ycndqS.png">
 
-
-https://img.imgyukle.com/2023/12/29/ycndqS.png
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycndqS.png)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycJP0b.png)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycnALG.png)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycn4bH.jpeg)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycn7of.jpeg)
-
-Admin Paneli Tasarımı
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycnfg1.jpeg)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycnbDU.jpeg)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycn9QA.jpeg)
-![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycnZ5o.jpeg)
+Admin Paneli Görüntüleri
+<img src="https://i.hizliresim.com/7d601cl.jpg">
+<img src="https://i.hizliresim.com/75fuv26.jpg">
+<img src="https://i.hizliresim.com/5mcrwse.jpg">
+<img src="https://i.hizliresim.com/s33x6f7.jpg">
