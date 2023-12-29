@@ -22,7 +22,7 @@ Veritabanı Şeması
 
 
 Ön Yüz Tasarımı!
-<img src="https://i.hizliresim.com/opjgrx9.png](https://github.com/BurakSekmenn/BurakSekmen_internet_programciligi_vize_odevi/assets/119975890/843c9414-784c-473f-85b9-7853267fa194)">
+<img src="https://img.imgyukle.com/2023/12/29/ycndqS.png">
 
 
 https://img.imgyukle.com/2023/12/29/ycndqS.png
