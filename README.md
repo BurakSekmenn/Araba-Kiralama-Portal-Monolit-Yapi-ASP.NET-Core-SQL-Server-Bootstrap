@@ -22,7 +22,7 @@ Veritabanı Şeması
 
 
 Ön Yüz Tasarımı!
-[Burak Sekmen Rent A Car Yazılımı](https://github.com/BurakSekmenn/BurakSekmen_internet_programciligi_vize_odevi/assets/119975890/843c9414-784c-473f-85b9-7853267fa194)
+https://github.com/BurakSekmenn/BurakSekmen_internet_programciligi_vize_odevi/assets/119975890/843c9414-784c-473f-85b9-7853267fa194
 
 https://img.imgyukle.com/2023/12/29/ycndqS.png
 ![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycndqS.png)
