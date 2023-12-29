@@ -22,7 +22,7 @@ Veritabanı Şeması
 ![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycJnrc.png)
 
 Ön Yüz Tasarımı
-
+https://img.imgyukle.com/2023/12/29/ycndqS.png
 ![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycndqS.png)
 ![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycJP0b.png)
 ![Uygulama Ekran Görüntüsü](https://img.imgyukle.com/2023/12/29/ycnALG.png)
