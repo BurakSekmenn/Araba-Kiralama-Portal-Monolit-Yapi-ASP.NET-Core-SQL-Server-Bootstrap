@@ -23,6 +23,7 @@ Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://www.youtube.com/
 
 <h1>Ön Yüz Görüntüleri!</h1>
 <img src="https://i.hizliresim.com/mduv1zm.png">
+<img src="https://i.hizliresim.com/rfdl289.jpg">
 <img src="https://i.hizliresim.com/snvm1bb.png">
 <img src="https://i.hizliresim.com/5afmx9r.jpg">
 <img src="https://i.hizliresim.com/3kzqz0b.png">
