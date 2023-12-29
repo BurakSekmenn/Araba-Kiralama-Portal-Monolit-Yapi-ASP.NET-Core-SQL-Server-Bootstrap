@@ -96,13 +96,17 @@ namespace BurakSekmen.Controllers
         public async Task<IActionResult> MailGonder()
         {
             await userImage();
+            var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
 
-            List<SelectListItem> kisileribul = (from x in _appDbContext.Users.ToList()
-                                               select new SelectListItem
-                                               {
-                                                   Text = x.FullName,
-                                                   Value = x.Email,
-                                               }).ToList();
+            List<SelectListItem> kisileribul = (from user in _appDbContext.Users.ToList()
+                                                where userManager.IsInRoleAsync(user, "admin").Result ||
+                                                      userManager.IsInRoleAsync(user, "calisan").Result
+                                                select new SelectListItem
+                                                {
+                                                    Text = user.FullName,
+                                                    Value = user.Email,
+                                                }).ToList();
+
             ViewBag.dgr1 = kisileribul;
 
             return View();

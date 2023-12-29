@@ -25,6 +25,8 @@ namespace BurakSekmen.Models
 
        public DbSet<UserNot> UserNots { get; set; } 
 
+       public DbSet<Contact> Contacts { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

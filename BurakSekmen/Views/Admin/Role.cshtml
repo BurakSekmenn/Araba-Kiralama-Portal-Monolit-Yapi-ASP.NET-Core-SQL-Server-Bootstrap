@@ -5,40 +5,48 @@
 }
 
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card mb-4" style="margin-top:20px;">
-            <div class="card-header"><i class="fas fa-table mr-1"></i>Röller Tablomuz</div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="tbaraba" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Kullanıcı Adı	 </th>
-                                <th>User Name	</th>
-                                <th>Role Tipi		</th>
-                                <th>İşlemler	</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Kullanıcı Adı	 </th>
-                                <th>User Name	</th>
-                                <th>Role Tipi		</th>
-                                <th>İşlemler	</th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="tblBody">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+@model List<UserModel>
+<h1>Kullanıcılar</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Adı Soyadı</th>
+            <th>Kullanıcı Adı</th>
+            <th>E-Posta</th>
+            <th>Rol</th>
+            <th>Resmi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.FullName</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>
+                    @foreach (var role in item.Roles)
+                    {
+                        <span>@role</span>
+                    }
+                </td>
+                <td>
+                    <img class="img-circle elevation-2" src="~/Photos/@item.Photo" width="100px" height="100px">
+                </td>
+
+                
+            </tr>
+            i++;
+        }
+
+    </tbody>
+</table>
 
 
 

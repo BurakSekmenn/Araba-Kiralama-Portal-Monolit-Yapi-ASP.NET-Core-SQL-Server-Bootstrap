@@ -71,20 +71,45 @@ namespace BurakSekmen.Controllers
 
            
         }
-       
+        public async Task<IActionResult> Contact()
+        {
+            await userImage();
+            var model = _appDbContext.Contacts.Select(x=>new ContactViewModel()
+            {
+                Email = x.Email,
+                NameandSurname = x.NameandSurname,
+                Message = x.Message,
+                Phone = x.Phone,
+            }).ToList();
+            return View(model);
+        }
+
+
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Role()
         {
             await userImage();
-            // var role = _appDbContext.Users.Select(x => new RoleViewModel()
-            // {
-            //     Id = x.Id,
-            //     FullName = x.FullName,
-            //     UserName = x.UserName,
-            //     Role = x.Role
-            // }).ToList();
-            //return View(role);
-            return View();
+            var users = await _userManager.Users.ToListAsync(); // Kullanıcıları çek
+
+            var userModels = new List<UserModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var userModel = new UserModel
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Photo = user.PhotoUrl,
+                    Roles = roles.ToList()
+                };
+
+                userModels.Add(userModel);
+            }
+
+            return View(userModels);
         }
         [Authorize(Roles = "admin")]
         public async Task<JsonResult> GetRole()

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model List<ContactViewModel>
+<button type="button" class="btn btn-success offset-10" id="tbl1" data-toggle="modal" data-target="#staticBackdrop">Yeni Duyuru Ekle</button>
+
+<div class="card mb-4" style="margin-top:20px;">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>İletişim Tablosu</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tbl1" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Adı Soyadı </th>
+                        <th>Telefon Numrası</th>
+                        <th>Email Adresi</th>
+                        <th>Mesajı</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sıra No</th>
+                        <th>Adı Soyadı </th>
+                        <th>Telefon Numrası</th>
+                        <th>Email Adresi</th>
+                        <th>Mesajı</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@x.NameandSurname</td>
+                            <td>@x.Phone</td>
+                            <td>@x.Email</td>
+                            <td>@x.Message</td>
+                        </tr>
+                        i = i + 1;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

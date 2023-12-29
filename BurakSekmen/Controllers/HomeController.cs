@@ -87,6 +87,11 @@ namespace BurakSekmen.Controllers
         public async Task<IActionResult> Register(RegisterModel model)
         {
             var rootFolder = _fileProvider.GetDirectoryContents("wwwroot");
+            if(model.PhotoFile == null)
+            {
+                _notyfService.Information("Lütfen Fotoğraf Yükleyiniz");
+                return View();
+            }
             var photoUrl = "-";
             if (model.PhotoFile.Length > 0 && model.PhotoFile != null)
             {
@@ -277,9 +282,24 @@ namespace BurakSekmen.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactViewModel model)
+        {
+            var iletisim = new Contact();
+            iletisim.Email = model.Email;
+            iletisim.Phone = model.Phone;
+            iletisim.NameandSurname = model.NameandSurname;
+            iletisim.Message = model.Message;
+            
+            _appDbContext.Contacts.Add(iletisim);
+            await _appDbContext.SaveChangesAsync();
+            _notyfService.Success("Başarılı Bir Şekilde Mesajınız iletilmiştir.",2);
+            return RedirectToAction("Contact", "Home");
+          
+        }
 
 
-        
+
         public IActionResult MyCars()
         {
             var veri = _appDbContext.Vehicles

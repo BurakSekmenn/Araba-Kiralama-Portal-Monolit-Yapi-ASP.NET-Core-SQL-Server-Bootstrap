@@ -48,7 +48,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>@ViewBag.kategori</h3>
+                <h3>@ViewBag.yakıt</h3>
                 <p>Toplam Markalarımız</p>
             </div>
             <div class="icon">
@@ -91,15 +91,16 @@
                     <div class="direct-chat-messages">
 
                         <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-left">Admin</span>
-                              
-                            </div>
+                            
 
                             
                         @foreach(var x in Model.Duyuru)
                         {
-                            <img class="direct-chat-img" src="~/Photos/44139a12-58fb-43a6-8efa-d91d5b87f12c.jpg" alt="message user image">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Admin</span>
+
+                            </div>
+                            <img class="direct-chat-img" src="~/Photos/38aa23ce-e5a0-41ab-bdae-17909e40c289.jpg" alt="message user image">
                             <div class="direct-chat-text" style="margin-top:50px;">
                                @x.DuyurAcıklama
                             </div>
