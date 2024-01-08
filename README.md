@@ -8,7 +8,7 @@ Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://www.youtube.com/
 ## Özellikler
 
 - İndentity Kütüphanesi kullanıldı
-- Ajax İşlemleri.
+- Ajax İşlemleri.(wwwroot/js/)
 - İlişkili Veri Tabanı Uygulandı.
 - Telefon/Bilgisayar/Tablet Uyumlu Arayüz.
 - MVC Kullanırak Yazıldı.
@@ -34,4 +34,3 @@ Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://www.youtube.com/
 <img src="https://i.hizliresim.com/7d601cl.jpg">
 <img src="https://i.hizliresim.com/75fuv26.jpg">
 <img src="https://i.hizliresim.com/5mcrwse.jpg">
-<img src="https://i.hizliresim.com/s33x6f7.jpg">
