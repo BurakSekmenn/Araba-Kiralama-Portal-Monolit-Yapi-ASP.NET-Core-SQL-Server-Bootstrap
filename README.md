@@ -2,7 +2,7 @@
 # 20221129615-Burak Sekmen İnternet Programcılığı Final Ödevi
 
 Akdeniz Üniversitesi Bilgisayar Programcılığı İnternet Programcılığı dersi için yaptığım ödevim.
-Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://youtu.be/TzY4ycjszMw
+Konu:Araç Kiralama Portalı. Proje Tanıtım linki : 
 
 
 ## Özellikler
