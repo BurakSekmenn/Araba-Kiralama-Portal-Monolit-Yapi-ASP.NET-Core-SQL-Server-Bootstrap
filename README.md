@@ -1,8 +1,13 @@
 
-# 20221129615-Burak Sekmen İnternet Programcılığı Final Ödevi
+# Araba Kiralama Portalı Geliştirme
 
-Akdeniz Üniversitesi Bilgisayar Programcılığı İnternet Programcılığı dersi için yaptığım ödevim.
-Konu:Araç Kiralama Portalı. Proje Tanıtım linki : https://youtu.be/jBhjN2NTUmA
+Bu projemde, .NET teknolojilerini kullanarak bir araba kiralama portalı geliştirdim. Projenin özellikleri şunlardı:
+-Identity Kullanımı: ASP.NET Identity framework'ü üzerine kurulu olarak kullanıcı kimlik doğrulama ve yetkilendirme işlemleri yapıldı
+-Rol Bazlı İşlemler: Kullanıcıların VIP, normal kullanıcı gibi farklı rollerde olmalarını sağlayan rol yönetimi sistemi entegre edildi. VIP kullanıcılar, özel avantajlara sahip olabilirken, normal kullanıcılar standart hizmetleri alabildi.
+-Araba Yönetimi: Portalda listelenen arabaların yönetimi sağlandı. Her araba için kimde olduğu, hangi kullanıcının hangi aracı ne kadar süreyle kiraladığı gibi bilgiler tutuldu ve yönetildi.
+-Güvenlik ve Veri Bütünlüğü: Veritabanı yönetimi için Entity Framework kullanılarak veri bütünlüğü ve güvenliği sağlandı. Kullanıcı verileri ve araç bilgileri, ilişkisel tablolar kullanılarak tutuldu ve yönetildi.
+Bu projede, .NET'in sağladığı güçlü yetenekler ile kullanıcı yönetimi, rol bazlı erişim kontrolü ve veri yönetimi gibi önemli işlevler entegre edilerek, güvenli ve kullanıcı dostu bir araba kiralama portalı oluşturuldu.
+Proje Tanıtım linki : https://youtu.be/jBhjN2NTUmA
 
 
 ## Özellikler
